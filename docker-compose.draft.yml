@@ -1,0 +1,44 @@
+services:
+  spark:
+    image: jupyter/pyspark-notebook:spark-3.5.0
+    container_name: spark-jupyter
+    ports:
+      - "8888:8888"
+      - "4040:4040"
+    volumes:
+      - ./notebooks:/home/jovyan/work/notebooks
+      - ./jobs:/home/jovyan/work/jobs
+      - ./data:/home/jovyan/work/data
+    environment:
+      - JUPYTER_TOKEN=gosoft
+    command: start-notebook.sh --NotebookApp.token='gosoft'
+
+  postgres:
+    image: postgres:16
+    container_name: pg-warehouse
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: dataeng
+      POSTGRES_PASSWORD: dataeng
+      POSTGRES_DB: warehouse
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql:/docker-entrypoint-initdb.d
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    volumes:
+      - miniodata:/data
+    command: server /data --console-address ":9001"
+
+volumes:
+  pgdata:
+  miniodata:
