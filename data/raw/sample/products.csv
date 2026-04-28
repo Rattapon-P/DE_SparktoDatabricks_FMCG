@@ -1,0 +1,506 @@
+product_id,product_name,aisle_id,department_id
+23,Organic Turkey Burgers,49,12
+79,Wild Albacore Tuna No Salt Added,95,15
+95,Organic Rice Vinegar,66,6
+196,Soda,77,7
+248,Dried Sweetened Cranberries,117,19
+260,Cantaloupe,24,4
+274,Snack Bags,87,17
+311,Naturals Savory Turkey Breakfast Sausage,52,1
+481,Black Peppercorns,104,13
+519,Antioxidant Infusions Brasilia Blueberry,31,7
+651,Organic Salted Butter,36,16
+1005,China Green Tips Green Tea,94,7
+1200,Vegetable Classics Vegetable Soup,69,15
+1529,"Parsley, Italian (Flat), New England Grown",16,4
+1559,Cherry Pomegranate Greek Yogurt,120,16
+1757,Organic Cashew Carrot Ginger Soup,69,15
+1819,All Natural No Stir Creamy Almond Butter,88,13
+2002,"The \""World's Best\"" Veggie Burger",42,1
+2078,Unsalted Pure Irish Butter,36,16
+2361,Mint Chip,37,1
+2573,Garlic Pepper Ramen,66,6
+2707,Complete™ ActionPacs™ Fresh Scent Dishwasher Detergent,74,17
+2732,Gluten Free Pretzel Sticks,107,19
+2846,Organic Green Onions,83,4
+3151,Super Tea Power Greens,94,7
+3376,Organic Whole Kernel Sweet Corn No Salt Added,81,15
+3634,Krinkle Cut Classic Barbecue Potato Chips,107,19
+4071,Organic Lemongrass Ginger Ramen,66,6
+4799,Shredded Parmesan,21,16
+4853,Broccoli Rabe,83,4
+4920,Seedless Red Grapes,123,4
+4945,Large Pineapple Chunks,123,4
+4957,Total 2% Lowfat Greek Strained Yogurt With Blueberry,120,16
+5002,Organic Iced Oatmeal Cookie ZBar,3,19
+5194,Organic Bunny Fruit Snacks Berry Patch,50,19
+5212,Watermelon Chunks,123,4
+5322,Gluten Free Dark Chocolate Chunk Chewy with a Crunch Granola Bars,3,19
+5450,Small Hass Avocado,24,4
+5539,Organic SprouTofu Silken Tofu,14,20
+5605,Sesame Seed,104,13
+5646,Organic Turkey Bacon,106,12
+5699,Gluten Free Mushroom Risotto Bowl,38,1
+5746,Heavy Cream,53,16
+5769,Organic Chicken Stock,69,15
+5818,White Onion,83,4
+5869,Unsweetened Carob Chips,17,13
+5876,Organic Lemon,24,4
+5907,Apple Cinnamon Fig Bar,48,14
+5989,Sliced Tamed Jalapeno Peppers,110,13
+5999,"Semi-Soft Cheese, Ripened",21,16
+6141,Low Sodium Beef Broth,69,15
+6361,Soft Potato Bread,112,3
+6473,Bag of Lemons,24,4
+6489,Backyard Barbeque Potato Chips,107,19
+6808,Organic Spinach & Cheese Tortellini,12,9
+7058,Vidalia Onions,83,4
+7076,Grain Free Chicken Formula Cat Food,41,8
+7160,Clear Cups,111,17
+7350,Natural Lime Flavor Sparkling Mineral Water,115,7
+7503,Whole Almonds,117,19
+7632,Old Style Whole Grain Dijon Mustard,72,13
+7746,Oregano,104,13
+7781,Organic Sticks Low Moisture Part Skim Mozzarella String Cheese,21,16
+7952,Chicken & Apple Breakfast Sausage,106,12
+7963,Gluten Free Whole Grain Bread,58,1
+8021,100% Recycled Paper Towels,54,17
+8138,Traditional Hummus,67,20
+8193,Russet Potato,83,4
+8197,PlusShot Blueberry Acai Probiotic Juice Drink,31,7
+8230,100% Recycled Bathroom Tissue,54,17
+8239,Peanut Butter Creamy With Salt,88,13
+8277,Apple Honeycrisp Organic,24,4
+8296,OG Sesame Tamari Rice Cake Organic Rice Cakes,78,19
+8309,Nonfat Icelandic Style Strawberry Yogurt,120,16
+8424,Broccoli Crown,83,4
+8467,Cinnamon Raisin Bread,112,3
+8479,Original Black Box Tablewater Cracker,78,19
+8518,Organic Red Onion,83,4
+8670,Diced Tomatoes,81,15
+8834,Raspberry Lime Sparkling Seltzer Water,115,7
+8952,Multigrain Pancake & Waffle Mix,130,14
+8988,Organic Garlic Powder,104,13
+9124,Broccoli & Cheddar Bake Meal Bowl,38,1
+9339,Organic Chicken & Apple Sausage,106,12
+9387,Granny Smith Apples,24,4
+9598,Gogo Squeez Organic Apple Strawberry Applesauce on the Go,99,15
+9681,Chicken Tikka Masala with Cumin Infused Basmati Rice Frozen Meal,38,1
+9839,Organic Broccoli,83,4
+9871,Beef Loin New York Strip Steak,122,12
+10132,Organic American Cheese Singles,21,16
+10177,German Barrel Sauerkraut,110,13
+10258,Pistachios,117,19
+10305,Black Plum,24,4
+10326,Organic Fuji Apples,24,4
+10504,Yukon Gold Potatoes 5lb Bag,83,4
+10644,Italian Extra Virgin Olive Oil,19,13
+10863,Grain Free Turkey & Salmon Formula Cat Food,41,8
+10895,Mexican Finely Shredded Cheese,21,16
+10960,Nutritional Yeast Seasoning,104,13
+11068,Medium Cheddar Cheese Block,21,16
+11136,Organic Low Sodium Chicken Cooking Stock,69,15
+11520,Large Alfresco Eggs,86,16
+11777,Red Raspberries,123,4
+11782,Bing Cherries,24,4
+11790,Natural Vanilla Marshmallows,17,13
+11845,100% Mango Juice,98,7
+11865,Light & Lean Spaghetti Italiano with Meatless Meatballs,38,1
+11913,Shelled Pistachios,117,19
+12000,Baked Organic Sea Salt Crunchy Pea Snack,72,13
+12007,Organic All Day Fresh Deodorant Lavender,80,11
+12053,Panama Peach Antioxidant Infusion,31,7
+12075,Spicy Hummus,67,20
+12196,Chicken Quesadilla,13,20
+12206,Basil Pesto,9,9
+12258,Organic White English Muffins,93,3
+12324,Indian Paneer Tikka,38,1
+12384,Organic Lactose Free 1% Lowfat Milk,91,16
+12427,Original Beef Jerky,23,19
+12845,Chopped Walnuts,117,19
+12872,Penne Rigate,131,9
+13032,Cinnamon Toast Crunch,121,14
+13083,Lowfat Small Curd Cottage Cheese,108,16
+13176,Bag of Organic Bananas,24,4
+13198,85% Lean Ground Beef,122,12
+13212,Ground Black Pepper,104,13
+13249,Skim Milk,84,16
+13351,Total 0% Peach Yogurt,120,16
+13512,Organic Smoked Chicken Breast,96,20
+13629,Organic Snipped Green Beans,83,4
+13640,Asian Pears,24,4
+13740,Organic Summer Strawberry Bunny Fruit Snacks,50,19
+13742,Organic Coconut Almond Peanut,3,19
+13802,Salted Sweet Cream Butter,36,16
+13829,Mild Salsa,51,13
+13870,Lightly Salted Baked Snap Pea Crisps,107,19
+13988,Snow Peas,83,4
+14084,Organic Unsweetened Vanilla Almond Milk,91,16
+14267,Organic Refried Black Beans,59,15
+14306,Organic Packham Or Anjou Pears,110,13
+14332,Organic Yellow Mustard,72,13
+14553,Oats & Honey Granola,57,14
+14947,Pure Sparkling Water,115,7
+14992,Green Beans,83,4
+15011,"Pita Chips, Simply Naked",107,19
+15143,Blueberry Pint,24,4
+15261,Organic Rosemary,16,4
+15290,Orange Bell Pepper,83,4
+15349,Organic Raw Agave Nectar,29,13
+15392,Organic Mayonnaise,72,13
+15581,Boom Chicka Pop Candy Corn Flavored Kettle Corn,23,19
+15592,Organic Baby Romaine Lettuce,123,4
+15841,Organic Dark Chocolate Almond & Sea Salt Trail Mix Bar,3,19
+15937,Shallot,83,4
+16018,Cinnamon Crunch Apple Chips,50,19
+16154,Mini Peanut Butter Sandwich Crackers,78,19
+16168,Large Organic Omega3 Brown Eggs,86,16
+16185,Sharp Cheddar Cheese,21,16
+16349,Organic Yams,83,4
+16521,Walnut Halves & Pieces,117,19
+16589,Plantain Chips,107,19
+16797,Strawberries,24,4
+16857,Barcelona Vinaigrette Mediterranean Style,89,13
+16869,Automatic Dishwasher Tablets Citrus - 25 CT,74,17
+16965,Chocolate Ice Cream,37,1
+17122,Honeycrisp Apples,24,4
+17159,Rhubarb,83,4
+17224,Oats & Honey Gluten Free Granola,3,19
+17600,"YoKids Squeezers Organic Low-Fat Yogurt, Strawberry",120,16
+17638,Vanilla Coffee Concentrate,26,7
+17668,Unsweetened Chocolate Almond Breeze Almond Milk,91,16
+17706,Organic Whole Grain Wheat English Muffins,93,3
+17758,Strawberry Rhubarb Yoghurt,120,16
+17766,Grain Free Turkey Formula Cat Food,41,8
+17769,Diet Caffeine Free Naturally Flavored Lemon Lime Soda,77,7
+17794,Carrots,83,4
+17828,Organic Spinach & Feta Dinner Sausage,106,12
+17872,Total 2% Lowfat Plain Greek Yogurt,120,16
+18370,Organic Shredded Mozzarella,21,16
+18382,Saltine Crackers,78,19
+18441,Organic Ketchup,72,13
+18465,Organic Grade A Free Range Large Brown Eggs,86,16
+18479,Organic Low Sodium Vegetable Broth,69,15
+18523,Total 2% All Natural Greek Strained Yogurt with Honey,120,16
+18531,Organic Heavy Whipping Cream,53,16
+18599,Garlic Couscous,4,9
+18656,Organic Red Potato,83,4
+18761,Balsamic Vinegar Of Modena,19,13
+18880,Organic Free Range Low Sodium Chicken Broth,69,15
+18926,Fat Free Strawberry Yogurt,120,16
+18961,Organic Dark Chocolate Pomegranate Trail Mix Bar,3,19
+18987,Hot Dog Buns,43,3
+19019,Uncured Slow Cooked Ham,96,20
+19051,"Pita Chips, Simply Naked, Party Size",107,19
+19057,Organic Large Extra Fancy Fuji Apple,24,4
+19156,Fat Free Blueberry Yogurt,120,16
+19240,Organic Fuji Red Apple Chips,107,19
+19543,Brioche Hot Dog Buns,43,3
+19627,Butternut Squash Pear Stage 2 Baby Food,92,18
+19678,Organic Russet Potato,83,4
+19769,Zero Calorie Tonic Water,6,2
+20084,Pineapple Apple Mint Organic Cold Pressed Juicd,31,7
+20114,Jalapeno Peppers,83,4
+20323,Strained Tomatoes,81,15
+20350,Chicken Canned Kitten Food,41,8
+20383,Pepper Greens,123,4
+20574,Roasted Turkey,96,20
+20632,Mache Rosettes French Salad Mix,123,4
+20754,Mediterranean Mint Gelato,37,1
+20785,Extra Sharp Aged Cheddar Cheese slices,21,16
+20843,100% Pure Eucalyptus Essential Oil,101,17
+20899,Goo Berry Pie Probugs Kefir,120,16
+20920,Sage,16,4
+20995,Organic Broccoli Florets,116,1
+21040,Lavender 100% Pure Essential Oil Calming,101,17
+21108,Cherry Vanilla Creme Soda,77,7
+21137,Organic Strawberries,24,4
+21150,Fire Grilled Steak Bowl,38,1
+21174,I Heart Baby Kale,123,4
+21198,Coconut Milk Non Dairy Frozen Dessert No Sugar Added Mint Chip,37,1
+21227,Smart Dogs Veggie Hot Dogs,14,20
+21298,Organic Cake Cones,37,1
+21329,Organic Hearty Split Pea & Uncured Ham Soup,69,15
+21376,Pretzel Crisps Original Deli Style Pretzel Crackers,107,19
+21413,Organic Soba,66,6
+21462,Zero Calorie Cola Soda,77,7
+21573,Roasted Pine Nut Hummus,67,20
+21616,Organic Baby Arugula,123,4
+21709,Sparkling Lemon Water,115,7
+21833,Herbs Chives,16,4
+21903,Organic Baby Spinach,123,4
+22000,The Original Worcestershire Sauce,72,13
+22035,Organic Whole String Cheese,21,16
+22124,Total 0% Raspberry Yogurt,120,16
+22199,Extra-Dry Cava,134,5
+22247,Organic Chives,16,4
+22474,Cheddar Bunnies Snack Crackers,78,19
+22475,Jicama,83,4
+22559,Kitchen Cheese Enchilada,38,1
+22742,Organic Sparkling Blood Orange Beverage,98,7
+22825,Organic D'Anjou Pears,24,4
+22829,Multigrain Flax Seeded Flatbread Crackers,78,19
+22950,Natural Free & Clear Dishwasher Detergent Packs,74,17
+22963,Organic Roasted Turkey Breast,96,20
+23165,Organic Leek,83,4
+23400,Organic Premium Tomato Paste,81,15
+23516,Organic Unbleached All-Purpose Flour,17,13
+23541,Veri Veri Teriyaki Marinade & Sauce,5,13
+23592,RapidRise Yeast,17,13
+23650,Electrolyte Water,115,7
+23712,Natural Crackers,78,19
+23765,Organic Smoked Turkey Breast,96,20
+23879,Applewood Smoked Turkey Breast,96,20
+24010,Wheat Gluten Free Waffles,52,1
+24184,Red Peppers,83,4
+24231,Tahitian Vanilla Bean Gelato,37,1
+24341,Organic & Cold-Pressed Vegetable & Fruit Juice Vitality,31,7
+24535,Plain Whole Milk Yogurt,120,16
+24654,Potato Hot Dog Buns,43,3
+24768,All Natural Honey Almond Butter,88,13
+24799,Vanilla Skyr Nonfat Yogurt,120,16
+24810,Organic Lightly Salted Brown Rice Cakes,78,19
+24838,Unsweetened Almondmilk,91,16
+24852,Banana,24,4
+24952,"Tortilla Chips, Corn, Red Hot Blues",107,19
+24954,Total 0% with Honey Nonfat Greek Strained Yogurt,120,16
+24990,Go Mango! Organic Dried Chili Lime Mango,117,19
+25133,Organic String Cheese,21,16
+25146,Original Orange Juice,31,7
+25199,Classic Chicken Salad,1,20
+25623,Real Guacamole,67,20
+25659,Organic Coconut Milk,91,16
+25931,Organic Baby Spinach Salad,123,4
+26088,Aged White Cheddar Popcorn,23,19
+26209,Limes,24,4
+26346,Organic Skim Milk,84,16
+26352,Chicken Caesar Salad,1,20
+26405,XL Pick-A-Size Paper Towel Rolls,54,17
+26576,Yellow Corn Tortilla Chips,107,19
+26604,Organic Blackberries,24,4
+26790,Organic AppleApple,99,15
+26882,Russet Potatoes,83,4
+26940,Organic Large Green Asparagus,83,4
+27104,Fresh Cauliflower,83,4
+27156,Organic Black Beans,59,15
+27243,Premium Pure Cane Granulated Sugar,17,13
+27344,Uncured Genoa Salami,96,20
+27413,100% Mighty Mango Juice Smoothie,31,7
+27451,Almond Meal/Flour,17,13
+27521,Organic Lacinato (Dinosaur) Kale,83,4
+27555,Organic Dried Granny Apple Chips,107,19
+27596,Classic Original Hommus,67,20
+27690,Apple Cinnamon GoGo Squeez,50,19
+27737,Brown Rice Black-Eyed Peas and Veggies Bowl,38,1
+27845,Organic Whole Milk,84,16
+27959,Premium Indian Tonic Water,77,7
+27966,Organic Raspberries,123,4
+27973,Almond Non-Dairy Yogurt Made From Real Almonds Plain Low Fat,120,16
+28134,Grain Free Turkey Canned Cat Food,41,8
+28289,Organic Shredded Carrots,123,4
+28373,Original Rotisserie Chicken,13,20
+28465,Icelandic Style Skyr Blueberry Non-fat Yogurt,120,16
+28535,Cucumber & Garlic  Tzatziki,51,13
+28842,Bunched Cilantro,16,4
+28874,Carrot Ginger Soup,1,20
+28918,Marcona Almonds,117,19
+28928,Uncured Black Forest Ham,96,20
+28985,Michigan Organic Kale,83,4
+28986,Mild Italian Chicken Sausage,106,12
+29594,YoKids Strawberry Banana/Strawberry Yogurt,120,16
+29602,Ear Candy (Cow Ears) Dog Chews,40,8
+29650,Pork Chorizo,122,12
+29871,Organic Roast Beef,96,20
+29894,Organic Dark Brown Sugar,17,13
+29993,Organic Low Fat Chocolate Milk,84,16
+30252,Organic Soft Wheat Bread,112,3
+30305,Fancy Eggplant,83,4
+30391,Organic Cucumber,83,4
+30450,Creamy Almond Butter,88,13
+30480,"Tomatoes, Whole Peeled",81,15
+30489,Original Hummus,67,20
+30563,Strained Non-Fat Strawberry Icelandic Style Skyr Yogurt,100,21
+30855,Chocolate Hazelnut Butter Blend,88,13
+30908,Teriyaki Turkey Jerky,23,19
+30967,Organic Frosted Flakes Cereal,121,14
+31066,Aluminum Foil,85,17
+31343,Shredded Mild Cheddar Cheese,21,16
+31506,Extra Virgin Olive Oil,19,13
+31612,Black Bean Vegetables Burrito,38,1
+31683,Original No Pulp 100% Florida Orange Juice,31,7
+31717,Organic Cilantro,16,4
+31883,Vegetable Lasagna,38,1
+32030,Extra Sharp White Cheddar,21,16
+32052,Organic Brown Rice Cake Salt-Free,78,19
+32139,Hommus Classic Original,67,20
+32177,Blood Oranges,24,4
+32197,Organic Celery Root,83,4
+32299,Dijon Mustard,72,13
+32402,"Crackers, Crispy, Cheddar",78,19
+32537,Parsley,16,4
+32792,Chipotle Beef & Pork Realstick,23,19
+33021,Reserve Cheddar Cheese,2,16
+33037,Wheat English Muffins,93,3
+33276,Kalamata Olive Spread,67,20
+33572,Lactose Free 2% Reduced Fat Milk,91,16
+33640,"Baked Beans, Vegetarian",59,15
+33731,Grated Parmesan,21,16
+33740,"Cara Cara Oranges, Bag",24,4
+33754,Total 2% with Strawberry Lowfat Greek Strained Yogurt,120,16
+33761,Moisturizing Conditioner Aloe Vera + Macadamia Oil,22,11
+33787,Total 2% Lowfat Greek Strained Yogurt with Peach,120,16
+33957,Mexican Casserole Bowl,38,1
+34126,Organic Italian Parsley Bunch,16,4
+34128,Tzatziki,67,20
+34190,Organic Coconut Cream,66,6
+34216,Chocolate Chip Bunny Grahams Whole Grain Graham Snacks Bunny Grahams,61,19
+34284,Organic Light In Sodium Butternut Squash Soup,69,15
+34358,Garlic,83,4
+34448,Original Veggie Straws,50,19
+34551,Organic Cane Sugar,17,13
+34658,100% Recycled 2 Ply Jumbo Paper Towel Roll,54,17
+34688,Good Belly Probiotics Juice Drink Blueberry Acai Flavor,31,7
+35321,Organic Lowfat Milk,84,16
+35333,Seasoning Bay Leaf,104,13
+35469,Enchilada Black Bean Vegetable,38,1
+35640,Beer Brats Sausage,14,20
+35725,Organic Oregano,104,13
+35738,Calabrese uncured italian Salami  with pepper and paprika,96,20
+35765,Slow Cured Pepper + Garlic Salame Molisana,96,20
+35917,Organic Just Concord Grape Juice,98,7
+35948,Tonic Water,115,7
+35951,Organic Unsweetened Almond Milk,91,16
+35973,Paprika,104,13
+36070,"Super Spinach! Baby Spinach, Baby Bok Choy, Sweet Baby Kale",123,4
+36287,Smooth Operator Natural Peanut Butter,88,13
+36606,Sprouted Multi-Grain Bread,112,3
+36695,Organic Hothouse Cucumbers,83,4
+36735,Organic Roasted Sliced Chicken Breast,96,20
+36865,Non Fat Raspberry Yogurt,120,16
+37602,Mexican Coffee,26,7
+37646,Organic Gala Apples,24,4
+37687,Organic Spring Mix,123,4
+37803,Oyster Mushrooms,83,4
+37999,Antioxidant Infusions Ipanema Pomegranate Beverage,31,7
+38159,Organic Yellow Peaches,24,4
+38164,Almonds & Sea Salt in Dark Chocolate,45,19
+38277,Dairy Free Vanilla Coconut Milk,91,16
+38293,Ground Turkey Breast,35,12
+38456,Large Grapefruit,24,4
+38547,Bubblegum Flavor Natural Chewing Gum,46,19
+38596,Part Skim Ricotta Cheese,108,16
+38656,Gluten Free Peanut Butter Dark Chocolate Chewy With a Crunch Granola Bars,3,19
+38777,Organic Green Seedless Grapes,123,4
+38928,0% Greek Strained Yogurt,120,16
+38970,Organic Light Brown Sugar,17,13
+38988,White English Muffins,93,3
+39110,Red Chili Flakes,104,13
+39121,Organic Jasmine Rice,38,1
+39190,Vanilla Unsweetened Almond Milk,91,16
+39275,Organic Blueberries,123,4
+39409,"Ginger Root Beer, Naturally Flavored Zero Calorie Soda, Caffeine Free",77,7
+39657,Milk Chocolate Almonds,45,19
+39812,Organic Thyme,16,4
+39877,Organic Granny Smith Apple,24,4
+39922,Celery Sticks,123,4
+39928,Organic Kiwi,24,4
+40055,Unbleached Bread Flour,17,13
+40198,Blueberry Yoghurt,120,16
+40377,Unrefined Virgin Coconut Oil,19,13
+40571,Total 2% Greek Strained Yogurt with Cherry 5.3 oz,120,16
+40604,Feta Cheese Crumbles,21,16
+40706,Organic Grape Tomatoes,123,4
+40738,Superior Tonic Water,77,7
+40852,Lactose Free Fat Free Milk,91,16
+40992,Chopped Tomatoes,81,15
+41220,Organic Romaine Lettuce,83,4
+41259,Poblano Pepper,83,4
+41290,Lemonade,31,7
+41319,Sea Salt Caramel Gelato,37,1
+41540,Organic Whole White Mushrooms,83,4
+41787,Bartlett Pears,24,4
+41844,Honey Nut Cheerios,121,14
+41909,Bread & Butter Pickle Chips,110,13
+42265,Organic Baby Carrots,123,4
+42329,Private Selection Pinot Noir,28,5
+42342,Roasted Turkey Breast,96,20
+42347,Caffeine Free Diet Cola All Natural Soda,77,7
+42356,Strawberry Preserves,88,13
+42450,Macaroni & Cheese,38,1
+42557,Crunchy Almond Butter,88,13
+42585,Organic Extra Firm Tofu,14,20
+42625,"Flat Parsley, Bunch",16,4
+42647,Organic Poultry Blend Herbs,16,4
+42736,Unsalted Butter,36,16
+42803,Organic Apple Slices,50,19
+42828,Whipped Cream Cheese,108,16
+43014,Sliced Baby Bella Mushrooms,123,4
+43295,Unsweetened Vanilla Almond Milk,91,16
+43352,Raspberries,32,4
+43693,Whole Vitamin D Milk,84,16
+43704,Low Carb Whole Wheat Tortillas,128,3
+43875,Baby Food Stage 2 Blueberry Pear & Purple Carrot,92,18
+43961,Organic Peeled Whole Baby Carrots,123,4
+43967,Raspberry Lemonade,31,7
+44099,Organic Dried Porcini Mushrooms,63,9
+44303,Organic Shredded Unsweetened Coconut,17,13
+44359,Organic Small Bunch Celery,83,4
+44632,Sparkling Water Grapefruit,115,7
+44661,Bicolor Sweet Corn,83,4
+44683,Brussels Sprouts,83,4
+44910,Organic Spring Mix Salad,123,4
+44987,Heavy Whipping Cream,53,16
+45007,Organic Zucchini,83,4
+45045,Organic Stage 3 Pumpkin Cranberry Apple Baby Food,92,18
+45066,Honeycrisp Apple,24,4
+45537,Classic Round Crackers,78,19
+45613,Pad Thai,38,1
+45628,Mango Rosewater Lassi Yogurt Drink,120,16
+45645,Dark Chocolate Nuts & Sea Salt Bars,3,19
+45664,Onion Powder,104,13
+45767,Sunny Days Strawberry Snack Bars,92,18
+45948,Gluten Free 7 Grain Bread,112,3
+46149,Zero Calorie Cola,77,7
+46157,Natural Beef & Chicken Formula Food for Cats,41,8
+46676,Total 0% Nonfat Greek Yogurt,120,16
+46886,Raspberry Yoghurt,120,16
+46969,Organic Bosc Pear,24,4
+46979,Asparagus,83,4
+47042,Organic Red On the Vine Tomato,83,4
+47144,Unsweetened Original Almond Breeze Almond Milk,91,16
+47167,Organic Sunny Days Apple Snack Bars,92,18
+47209,Organic Hass Avocado,24,4
+47272,Antioxidant Infusions Beverage Malawi Mango,31,7
+47380,New York Style Nova Lox,15,12
+47526,Goat Cheese Log,21,16
+47553,Sugarfree Peppermint Chewing Gum,20,11
+47591,Prosciutto di San Daniele,96,20
+47601,Unsalted Cultured Butter,36,16
+47623,Seasoning Allspice,104,13
+47626,Large Lemon,24,4
+47672,Uncured Hickory Smoked Sunday Bacon,106,12
+47766,Organic Avocado,24,4
+47788,Honeydew Melon,24,4
+47792,Organic Beans & Rice Cheddar Cheese Burrito,38,1
+47912,Vanilla Skyr Style Yogurt,120,16
+48099,Truffle Parmesan Macaroni & Cheese Bowl,38,1
+48110,Thin Stackers Brown Rice Lightly Salted,78,19
+48121,Solid White-No Salt Added Albacore Tuna,95,15
+48204,Tamari Gluten Free Soy Sauce,66,6
+48210,Whole Wheat Blueberry Fig Bars,48,14
+48230,Soft Taco Size White Flour Tortillas,128,3
+48523,Birthday Cake Light Ice Cream,37,1
+48679,Organic Garnet Sweet Potato (Yam),83,4
+48697,Canola Oil,19,13
+48720,Shoestring Fries,129,1
+48775,Organic Red Cabbage,83,4
+48821,Pistachio Ice Cream,37,1
+48835,Organic Unsweetened Vanilla Coconut Non-Dairy Beverage,84,16
+49235,Organic Half & Half,53,16
+49273,Light and Lean Quinoa Black Beans with Butternut Squash and Chard,38,1
+49374,Organic Cultured Cream Cheese Spread,108,16
+49401,"Chicken Base, Organic",69,15
+49451,Artichoke Spinach Dip,67,20
+49508,Antioxidant Infusions Costa Rica Clementine,31,7
+49533,Cane Sugar,17,13
+49683,Cucumber Kirby,83,4

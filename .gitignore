@@ -1,0 +1,19 @@
+# Raw data — ignore the full Kaggle CSVs (largest is 577 MB),
+# keep the referentially-consistent sample/ + the README that explains schema.
+data/raw/*.csv
+!data/raw/sample/
+!data/raw/README.md
+
+# Medallion layers are pipeline outputs; ignore data but keep docs.
+data/bronze/*
+!data/bronze/README.md
+data/silver/*
+!data/silver/README.md
+data/gold/*
+!data/gold/README.md
+
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+*.log
+.env
