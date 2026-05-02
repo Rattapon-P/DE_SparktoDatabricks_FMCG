@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Pipeline Insight Summary — Instacart × Gosoft DE Prep</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root{
+    --bg:#0f1115; --panel:#161a22; --panel2:#1c2230; --line:#2a3142;
+    --ink:#e6edf3; --mute:#9aa4b2; --accent:#6ea8ff; --good:#5fd07a;
+    --bronze:#cd7f32; --silver:#b8c1d0; --gold:#d4af37; --pg:#5e9bd6;
+    --code:#0b0d12;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans Thai",sans-serif;
+    line-height:1.6;font-size:15px}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 24px 80px}
+  h1{font-size:30px;margin:0 0 6px}
+  h2{font-size:22px;margin:36px 0 12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  h3{font-size:17px;margin:22px 0 8px;color:var(--accent)}
+  h4{font-size:15px;margin:14px 0 6px;color:var(--mute);text-transform:uppercase;letter-spacing:.5px}
+  p,li{color:var(--ink)}
+  small,.mute{color:var(--mute)}
+  code,pre{font-family:ui-monospace,Menlo,Consolas,"Cascadia Mono",monospace;font-size:13.5px}
+  code{background:var(--code);padding:1px 6px;border-radius:4px;color:#cfe5ff}
+  pre{background:var(--code);padding:14px 16px;border-radius:8px;overflow:auto;border:1px solid var(--line)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+  .panel2{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:10px 0}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  @media(max-width:780px){.row,.row3{grid-template-columns:1fr}}
+  table{border-collapse:collapse;width:100%;margin:8px 0 10px;font-size:14px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#1a2030;color:var(--accent);font-weight:600}
+  tr:nth-child(even) td{background:#171c27}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;margin-right:6px}
+  .pill.bronze{background:rgba(205,127,50,.18);color:#e2a878;border:1px solid rgba(205,127,50,.4)}
+  .pill.silver{background:rgba(184,193,208,.14);color:#cfd6e3;border:1px solid rgba(184,193,208,.35)}
+  .pill.gold{background:rgba(212,175,55,.16);color:#e6c863;border:1px solid rgba(212,175,55,.4)}
+  .pill.pg{background:rgba(94,155,214,.16);color:#a5c8eb;border:1px solid rgba(94,155,214,.4)}
+  .pill.tag{background:#22293a;color:var(--mute);border:1px solid var(--line)}
+  .arrow{color:var(--accent);font-weight:700;text-align:center;margin:6px 0;font-size:18px}
+  .why{border-left:3px solid var(--accent);padding:6px 12px;background:#13192a;margin:8px 0;border-radius:0 6px 6px 0}
+  .why b{color:var(--accent)}
+  .num{display:inline-block;min-width:24px;height:24px;line-height:24px;text-align:center;
+    background:var(--accent);color:#0b0d12;border-radius:50%;font-weight:700;margin-right:8px;font-size:13px}
+  .qa{border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:8px 0;background:#141926}
+  .qa .q{color:#ffd58a;font-weight:600;margin-bottom:6px}
+  .qa .a{color:var(--ink)}
+  .ascii{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px;
+    white-space:pre;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:#cfe5ff;overflow:auto}
+  .insight{background:linear-gradient(180deg,#1a2030 0%,#171c27 100%);
+    border:1px solid #2c3754;border-radius:10px;padding:14px 16px;margin:10px 0}
+  .insight .head{color:#ffd58a;font-weight:700;margin-bottom:6px}
+  .toc{background:#141926;border:1px solid var(--line);border-radius:8px;padding:14px 18px}
+  .toc a{color:#9bc4ff;text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+  .kbd{background:#0b0d12;border:1px solid var(--line);border-bottom-width:2px;
+    padding:1px 6px;border-radius:4px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;color:#cfe5ff}
+  hr{border:none;border-top:1px dashed var(--line);margin:24px 0}
+  .footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--mute);font-size:13px}
+  .check{color:var(--good);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Pipeline Insight Summary</h1>
+  <p class="mute">Instacart Market Basket → Bronze / Silver / Gold → PostgreSQL · Project DE_SparktoDatabrick_FMCG · Generated 2026-05-03</p>
+</header>
+
+<div class="toc panel">
+  <b>Contents</b>
+  <ol>
+    <li><a href="#why">Why this dataset (data origin & business framing)</a></li>
+    <li><a href="#diagram">Pipeline diagram (your built architecture)</a></li>
+    <li><a href="#bronze">Bronze layer — raw landing</a></li>
+    <li><a href="#silver">Silver layer — analyst-ready (Delta)</a></li>
+    <li><a href="#gold">Gold layer — business marts</a></li>
+    <li><a href="#serving">Serving layer — PostgreSQL via JDBC</a></li>
+    <li><a href="#tradeoff">Cross-layer design decisions (interview gold)</a></li>
+    <li><a href="#qa">Interview Q&amp;A — what an interviewer can ask about every step</a></li>
+    <li><a href="#insights">Three senior insights you generated</a></li>
+  </ol>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="why">1. Why this dataset · ข้อมูลมาจากไหน</h2>
+
+<div class="panel">
+  <h4>Source</h4>
+  <ul>
+    <li><b>Dataset:</b> Instacart Market Basket Analysis</li>
+    <li><b>Provider:</b> Instacart (US online grocery), released for the <b>Kaggle 2017 competition</b></li>
+    <li><b>License:</b> non-commercial / research use (Kaggle terms)</li>
+    <li><b>URL:</b> kaggle.com/competitions/instacart-market-basket-analysis</li>
+    <li><b>Volume:</b> 6 CSV files · ~720 MB total · largest = <code>order_products__prior.csv</code> (577 MB · 32M rows)</li>
+  </ul>
+
+  <h4>Why this dataset for a Gosoft (CP All / 7-Eleven) interview</h4>
+  <p>Gosoft เป็นบริษัท IT ในเครือ CP All ที่ทำ data ให้ retail / FMCG (7-Eleven). Instacart คือ public dataset ที่<b>ใกล้ที่สุด</b>กับ POS feed ของร้านสะดวกซื้อ:</p>
+  <ul>
+    <li>มี <b>product hierarchy จริง</b>: department (21) → aisle (134) → product (~50K SKU) — เหมือนโครงสินค้าใน 7-11</li>
+    <li>มี <b>basket structure</b>: 1 order ประกอบด้วยหลายสินค้า + ลำดับหยิบใส่ตะกร้า — ใช้ทำ market basket / cross-sell</li>
+    <li>มี <b>repeat-purchase signal</b> (<code>reordered</code>) — ตรงกับ business question ใน FMCG: "สินค้าตัวไหนลูกค้ากลับมาซื้อซ้ำ?"</li>
+    <li>มี <b>temporal pattern</b> (<code>order_dow</code>, <code>order_hour_of_day</code>) — ใช้ทำ workforce / inventory planning</li>
+  </ul>
+  <div class="why"><b>Interview line:</b> "เลือก Instacart เพราะ schema กับ business question ใกล้ retail ที่สุดในบรรดา public dataset — ผมไม่ต้องสมมุติ business context, เปิดข้อมูลแล้วเห็นเลยว่า dept reorder rate ต่างกันยังไง"</div>
+</div>
+
+<div class="panel">
+  <h4>Files (raw inputs)</h4>
+  <table>
+    <tr><th>File</th><th>Rows</th><th>Size</th><th>Grain (1 row = ?)</th></tr>
+    <tr><td><code>aisles.csv</code></td><td>134</td><td>2.5 KB</td><td>1 aisle</td></tr>
+    <tr><td><code>departments.csv</code></td><td>21</td><td>270 B</td><td>1 department</td></tr>
+    <tr><td><code>products.csv</code></td><td>49,688</td><td>2.1 MB</td><td>1 SKU</td></tr>
+    <tr><td><code>orders.csv</code></td><td>3,421,083</td><td>109 MB</td><td>1 order header</td></tr>
+    <tr><td><code>order_products__prior.csv</code></td><td><b>32,434,489</b></td><td><b>577 MB</b></td><td>1 line item ใน order</td></tr>
+    <tr><td><code>order_products__train.csv</code></td><td>1,384,617</td><td>24 MB</td><td>1 line item (held-out split)</td></tr>
+  </table>
+  <p class="mute">Three columns ที่ DE ต้องเข้าใจในจังหวะแรก: <b>grain</b> (each row = ?), <b>cardinality</b> (ใหญ่/เล็ก → ใช้เลือก join strategy), <b>FK chain</b> (orders → order_products → products → aisles/departments)</p>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="diagram">2. Pipeline diagram (architecture you built)</h2>
+
+<pre class="ascii">┌────────────────────────────────────────────────────────────┐
+│                    YOUR DATA PIPELINE                       │
+├────────────────────────────────────────────────────────────┤
+│                                                            │
+│  📦 BRONZE (Parquet)        ← raw landing                  │
+│      ├─ orders                                             │
+│      ├─ order_products_prior  (32M)                        │
+│      ├─ products                                           │
+│      ├─ aisles                                             │
+│      └─ departments                                        │
+│              │                                             │
+│              ▼ clean + dedup + join + audit                │
+│                                                            │
+│  🥈 SILVER (Delta Lake)     ← analyst-ready                │
+│      ├─ dim_products         (50K, denormalized)           │
+│      ├─ dim_users            (200K, derived)               │
+│      └─ fact_order_items     (32M, partitioned by dept)    │
+│              │                                             │
+│              ▼ aggregate + business logic                  │
+│                                                            │
+│  🥇 GOLD (Delta Lake)       ← business marts               │
+│      ├─ dept_kpi             (21 rows)                     │
+│      ├─ sku_performance      (50K rows)                    │
+│      ├─ hourly_demand        (3.5K rows)                   │
+│      └─ customer_segment     (200K rows)                   │
+│              │                                             │
+│              ▼ JDBC                                        │
+│                                                            │
+│  🐘 POSTGRES (Serving)      ← BI consumption               │
+│      ├─ kpi_dept                                           │
+│      ├─ kpi_sku_top1000                                    │
+│      ├─ kpi_hourly_demand                                  │
+│      └─ kpi_customer_segment                               │
+│                                                            │
+└────────────────────────────────────────────────────────────┘</pre>
+
+<!-- ===================================================== -->
+<h2 id="bronze">3. <span class="pill bronze">BRONZE</span> raw landing</h2>
+
+<div class="panel">
+  <h3>What it is</h3>
+  <p>Bronze = ข้อมูลดิบจาก source ที่<b>เปลี่ยนแค่ format</b> (CSV → Parquet) เพื่อให้ query เร็วขึ้น, <b>ไม่แก้ข้อมูล</b>, ไม่ rename column, ไม่ทำ business logic.
+  Source data ทั้ง 6 ไฟล์ถูก ingest เข้า <code>/data/bronze/</code> เป็น Parquet 1-to-1.</p>
+
+  <h3>Why Parquet (ไม่ใช่ CSV)</h3>
+  <table>
+    <tr><th>Property</th><th>CSV (raw)</th><th>Parquet (Bronze)</th></tr>
+    <tr><td>Layout</td><td>row-based</td><td><b>columnar</b></td></tr>
+    <tr><td>Compression</td><td>plain text</td><td>Snappy / Zstd built-in (~5–10× smaller)</td></tr>
+    <tr><td>Schema</td><td>infer ทุกครั้งที่อ่าน</td><td>เก็บ schema ในไฟล์ → อ่านเร็ว, type-safe</td></tr>
+    <tr><td>Predicate pushdown</td><td>ไม่มี (ต้องอ่านทุก row)</td><td><b>มี</b> — Spark filter ที่ scan เลย</td></tr>
+    <tr><td>Column pruning</td><td>ไม่มี</td><td><b>มี</b> — เลือก 2 column จาก 7 → อ่านแค่ 2</td></tr>
+  </table>
+  <div class="why"><b>Why:</b> 32M-row CSV scan ทุกครั้ง = ช้ามาก. Parquet ลดทั้ง I/O และ CPU เพราะอ่านเฉพาะ column + filter ที่ใช้.<br>
+  <b>How to apply (interview):</b> "ผมแปลง CSV → Parquet ที่ Bronze เพราะ Parquet เป็น columnar, มี predicate pushdown และ schema metadata → query downstream เร็วขึ้นโดยไม่ต้อง re-parse CSV"</div>
+
+  <h3>Why "raw, no transform"</h3>
+  <p>หลัก Medallion: <b>Bronze ต้องสะท้อน source 1-to-1</b> เพื่อให้ replayability ได้ — ถ้า business logic ที่ Silver/Gold ผิด, ย้อนแก้ได้โดยไม่ต้องโหลดจาก source ใหม่ (ซึ่งอาจจะเปลี่ยนไปแล้ว).
+  เป็นเหตุผลเดียวกับ Stage / Landing zone ของ Azure Data Factory ที่คุณคุ้น.</p>
+
+  <div class="panel2">
+    <b>เทียบกับ ADF (ประสบการณ์เดิมของคุณ):</b><br>
+    Bronze ในที่นี้ ≈ <code>Stage</code> หรือ <code>Landing</code> container ใน ADLS ที่ ADF copy activity เขียนไฟล์ดิบลงไป.
+    ต่างกันแค่ format = Parquet (compressed) แทน CSV/JSON.
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="silver">4. <span class="pill silver">SILVER</span> analyst-ready (Delta Lake)</h2>
+
+<div class="panel">
+  <h3>What it is</h3>
+  <p>Silver = ข้อมูลที่<b>ทำความสะอาด + denormalize + audit</b> แล้ว, schema เสถียร, analyst เปิดใช้ได้ทันที.
+  ใน notebook <a href="../notebooks/03_silver_file.ipynb">03_silver_file.ipynb</a> สร้าง 3 ตาราง:</p>
+
+  <table>
+    <tr><th>Table</th><th>Rows</th><th>Source (Bronze)</th><th>Transformation</th></tr>
+    <tr><td><code>dim_products</code></td><td>49,688</td><td>products + aisles + departments</td><td>broadcast join + trim + dedup</td></tr>
+    <tr><td><code>dim_users</code></td><td>206,209</td><td>orders</td><td>groupBy user_id → aggregate</td></tr>
+    <tr><td><code>fact_order_items</code></td><td>32,434,489</td><td>order_products_prior + orders + dim_products</td><td>filter null + dedup + join + partition</td></tr>
+  </table>
+
+  <h3>4.1 <code>dim_products</code> — denormalized product dimension</h3>
+  <pre>products  ─┐
+aisles    ─┼─→ broadcast join (small) ─→ dim_products (50K)
+departments┘</pre>
+  <h4>Why this shape</h4>
+  <ul>
+    <li><b>Denormalize 3 tables → 1</b>: analyst ไม่ต้อง join 3 ตารางทุก query (3NF → star-schema dimension)</li>
+    <li><b>broadcast join</b>: aisles (2.5KB) และ departments (270B) เล็กกว่า 10MB threshold (default <code>spark.sql.autoBroadcastJoinThreshold</code>) → Spark ส่งทั้งตารางไปทุก executor แทน shuffle (ดู Q&amp;A ด้านล่าง)</li>
+    <li><b>trim(product_name)</b>: data hygiene — ป้องกัน " Banana" ≠ "Banana"</li>
+    <li><b>dropDuplicates(["product_id"])</b>: PK guarantee — ถ้า upstream ส่งซ้ำมา ก็ยังเหลือ row เดียว</li>
+    <li><b>silver_loaded_at</b>: audit column — ตอบคำถาม "row นี้เข้ามาเมื่อไหร่" → ใช้ debug + lineage</li>
+  </ul>
+
+  <h3>4.2 <code>dim_users</code> — derived user dimension</h3>
+  <pre>orders ─→ groupBy(user_id) ─→ agg(count, min, max, avg) ─→ dim_users (200K)</pre>
+  <h4>Why this shape</h4>
+  <p>Source ไม่มี users.csv — แต่ user_id อยู่ใน orders table. การสร้าง dim_users คือการ <b>derive dimension จาก fact</b> (pattern ที่พบบ่อยเมื่อ source ไม่มี master data).</p>
+  <ul>
+    <li><code>total_orders</code> = countDistinct(order_id) → กี่ครั้งที่ user สั่ง</li>
+    <li><code>avg_days_between_orders</code> = avg(days_since_prior_order) → ความถี่ใช้ทำ segmentation ที่ Gold</li>
+  </ul>
+
+  <h3>4.3 <code>fact_order_items</code> — the big fact</h3>
+  <pre>order_products_prior (32M) ─┐
+orders (3.4M)               ├─→ filter null + dedup + join ─→ partitionBy(department) ─→ fact_order_items
+dim_products (50K, broadcast)┘                                                              (32M, 21 partitions)</pre>
+  <h4>Why this shape</h4>
+  <ul>
+    <li><b>filter null + dedup ก่อน join</b>: ลด row ที่จะ join → ลด shuffle. Pattern "filter early" / "predicate pushdown"</li>
+    <li><b>broadcast dim_products (50K · ~2MB)</b>: ตารางเล็ก, broadcast เร็วกว่า sort-merge join. คุณ test แล้วใน notebook 02 — broadcast 0.21s vs regular 0.32s</li>
+    <li><b>partitionBy("department")</b>: query downstream เกือบทุกอันมี <code>WHERE department = 'produce'</code> หรือ groupBy(department). Partition pruning จะข้ามไฟล์ที่ไม่ตรงทันที (ลด I/O 90%+)</li>
+    <li><b>21 partitions</b>: ตรงกับ 21 departments — ขนาดเหมาะ (rule of thumb: partition ≥ 128MB, ไม่เล็กจนเกิด small-files problem)</li>
+  </ul>
+
+  <h3>Why Delta Lake (ไม่ใช่ Parquet เปล่า)</h3>
+  <p>Silver/Gold ใช้ <b>Delta</b> ไม่ใช่ Parquet เพราะได้ feature เพิ่ม:</p>
+  <table>
+    <tr><th>Feature</th><th>Parquet</th><th>Delta Lake</th></tr>
+    <tr><td>ACID transactions</td><td><span style="color:#ff8888">✗</span></td><td><span class="check">✓</span> — write ครึ่งทาง crash, reader ไม่เห็น dirty data</td></tr>
+    <tr><td>Schema enforcement</td><td><span style="color:#ff8888">✗</span></td><td><span class="check">✓</span> — กัน schema drift (column type เพี้ยน)</td></tr>
+    <tr><td>Time travel</td><td><span style="color:#ff8888">✗</span></td><td><span class="check">✓</span> — <code>VERSION AS OF 0</code></td></tr>
+    <tr><td>UPDATE / DELETE / MERGE</td><td><span style="color:#ff8888">✗</span> (rewrite ทั้งไฟล์)</td><td><span class="check">✓</span> — <code>MERGE INTO</code> สำหรับ SCD2, CDC</td></tr>
+    <tr><td>Compaction (OPTIMIZE)</td><td>manual</td><td><span class="check">✓</span> built-in</td></tr>
+    <tr><td>Z-ORDER (multi-dim cluster)</td><td><span style="color:#ff8888">✗</span></td><td><span class="check">✓</span></td></tr>
+  </table>
+  <div class="why"><b>Interview line:</b> "Parquet เป็น file format. Delta = Parquet + transaction log (<code>_delta_log/</code>) → ได้ ACID + time travel + MERGE. ในการ build pipeline ที่ต้อง upsert / replay / audit การมี Delta ลด complexity มาก เทียบกับ Parquet ที่ต้อง overwrite ทั้ง partition"</div>
+
+  <p>ใน notebook คุณ verify ด้วย <code>DeltaTable.forPath(...).history()</code> ที่แสดง <code>version 0 · WRITE · 32,434,489 rows</code> — นี่คือ transaction log ที่ Parquet ไม่มี.</p>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="gold">5. <span class="pill gold">GOLD</span> business marts</h2>
+
+<div class="panel">
+  <h3>What it is</h3>
+  <p>Gold = ข้อมูล<b>ตอบคำถามธุรกิจ 1 ข้อต่อ 1 ตาราง</b>. ลด row จากหลักล้าน → หลักหมื่น/ร้อย เพราะ aggregate ไว้ล่วงหน้าแล้ว → BI/dashboard query milliseconds, ไม่ต้อง scan fact 32M ทุกครั้ง.</p>
+  <p>Notebook <a href="../notebooks/04_Gold_layer.ipynb">04_Gold_layer.ipynb</a> สร้าง 4 marts:</p>
+
+  <table>
+    <tr><th>Mart</th><th>Rows</th><th>Business question ที่ตอบ</th><th>Stakeholder</th></tr>
+    <tr><td><code>dept_kpi</code></td><td>21</td><td>Department ไหน reorder สูง / ขายดี?</td><td>Category manager</td></tr>
+    <tr><td><code>sku_performance</code></td><td>49,676</td><td>SKU ตัวไหน performer / dead stock?</td><td>Merchandising</td></tr>
+    <tr><td><code>hourly_demand</code></td><td>3,528</td><td>Peak hour อยู่ตอนไหน × dept อะไร?</td><td>Workforce / inventory</td></tr>
+    <tr><td><code>customer_segment</code></td><td>206,209</td><td>VIP / Loyal / Regular / New แต่ละกลุ่มกี่คน?</td><td>CRM / Marketing</td></tr>
+  </table>
+
+  <h3>5.1 <code>dept_kpi</code> · 21 rows</h3>
+  <pre>fact_clean ─→ groupBy(department)
+              ─→ agg(count, countDistinct(order, user), sum(reordered),
+                     avg(reordered) AS reorder_rate,
+                     count/orders AS avg_items_per_order)</pre>
+  <h4>Result highlight</h4>
+  <table>
+    <tr><th>department</th><th>items_sold</th><th>reorder_rate</th><th>avg_items_per_order</th></tr>
+    <tr><td>dairy eggs</td><td>5.4M</td><td><b>0.67</b></td><td>2.49</td></tr>
+    <tr><td>produce</td><td>9.5M</td><td>0.65</td><td>3.93</td></tr>
+    <tr><td>beverages</td><td>2.7M</td><td>0.65</td><td>1.85</td></tr>
+    <tr><td>...</td><td>...</td><td>...</td><td>...</td></tr>
+    <tr><td>personal care</td><td>447K</td><td>0.32</td><td>1.40</td></tr>
+  </table>
+  <div class="why"><b>Insight ที่ตอบใน interview:</b> Reorder rate <b>สูงในของบริโภค (consumable)</b> — dairy, produce, beverages — เพราะใช้แล้วหมดต้องซื้อใหม่.
+  ส่วน <b>personal care / household ต่ำ</b> เพราะเป็น durable (ยาสีฟัน 1 หลอด ใช้ 2 เดือน). Insight นี้ <b>ไม่ใช่เรื่องเทคนิค</b> แต่แสดงว่าคุณเข้าใจ business → DE ที่ดี ≠ คนที่แค่ย้ายข้อมูล</div>
+
+  <h3>5.2 <code>sku_performance</code> · 49,676 rows</h3>
+  <pre>fact_clean ─→ groupBy(product_id) ─→ agg(...)
+            ─→ broadcast join dim_products (เพื่อใส่ product_name)</pre>
+  <p>Top performer: <b>Banana</b> · 472,565 ครั้ง · reorder_rate 0.84 · avg_cart_position 4.89 (หยิบเป็นชิ้นที่ 5 โดยเฉลี่ย).</p>
+
+  <h3>5.3 <code>hourly_demand</code> · 3,528 rows</h3>
+  <pre>fact_clean ─→ groupBy(order_dow, order_hour_of_day, department) ─→ partitionBy(order_dow)</pre>
+  <p>Peak ที่พบ: <b>Sunday 14:00</b> (262K orders) — pattern grocery weekly run.</p>
+
+  <h3>5.4 <code>customer_segment</code> · 206,209 rows</h3>
+  <pre>dim_users ─→ withColumn("segment", CASE WHEN total_orders >= 50 THEN 'VIP' ...)
+           ─→ withColumn("frequency_band", CASE WHEN avg_days &lt;= 7 THEN 'Weekly' ...)
+           ─→ partitionBy(segment)</pre>
+  <table>
+    <tr><th>segment</th><th>users</th></tr>
+    <tr><td>Regular</td><td>128,292</td></tr>
+    <tr><td>Loyal</td><td>42,467</td></tr>
+    <tr><td>New</td><td>23,986</td></tr>
+    <tr><td>VIP</td><td>11,464</td></tr>
+  </table>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="serving">6. <span class="pill pg">SERVING</span> PostgreSQL via JDBC</h2>
+
+<div class="panel">
+  <h3>Why a separate serving layer</h3>
+  <p>Delta อ่านได้เฉพาะใน Spark (หรือ Databricks). BI tool (Tableau / PowerBI / Looker) ไม่ได้พูด Delta โดยตรง — มันพูด <b>SQL via JDBC</b>. ดังนั้น Gold marts (ที่ aggregate แล้วเล็กพอ) ถูก <b>push ไป Postgres</b> ผ่าน JDBC.</p>
+
+  <table>
+    <tr><th>Postgres table</th><th>Source mart</th><th>Trick</th></tr>
+    <tr><td><code>kpi_dept</code></td><td>dept_kpi</td><td>full push (21 rows)</td></tr>
+    <tr><td><code>kpi_sku_top1000</code></td><td>sku_performance</td><td><b>top 1000 only</b> (50K → 1K)</td></tr>
+    <tr><td><code>kpi_hourly_demand</code></td><td>hourly_demand</td><td>full push (3.5K rows)</td></tr>
+    <tr><td><code>kpi_customer_segment</code></td><td>customer_segment</td><td><b>summary by segment×band</b> (200K → 11)</td></tr>
+  </table>
+
+  <div class="why"><b>Why subset before JDBC:</b> JDBC write เป็น row-by-row insert (ไม่ใช่ bulk parquet). ส่ง 200K rows = ช้า + ใช้ Postgres connection limit เกินจำเป็น.
+  เลือก top 1000 SKU + summary segment เพราะ BI dashboard ส่วนใหญ่ใช้ top-N + summary, ไม่ใช่ raw user list.<br>
+  <b>How to apply:</b> "ใน production จะใช้ COPY / batch insert + write only delta (rows ที่เพิ่ง update). JDBC สำหรับ batch ทุกคืน, full snapshot ขนาดเล็ก = OK"</div>
+
+  <h3>Setup ที่คุณทำ</h3>
+  <ul>
+    <li>Download <code>postgresql-42.7.0.jar</code> ผ่าน <code>!wget</code> ใน notebook</li>
+    <li>Pass jar ผ่าน <code>spark.jars</code> + <code>spark.driver.extraClassPath</code> + <code>spark.executor.extraClassPath</code> (ทั้ง driver และ executor ต้องเห็น jar)</li>
+    <li>ใช้ <code>spark-jdbc</code> + <code>mode("overwrite")</code> — ทุกคืน rebuild เต็ม</li>
+  </ul>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="tradeoff">7. Cross-layer design decisions (interview gold)</h2>
+
+<div class="row">
+  <div class="panel2">
+    <h4>Decision 1 · Why 3 layers, not 1?</h4>
+    <p><b>Single-stage</b> = read CSV → join → push to Postgres. ไม่มี checkpoint → bug ที่ Gold ต้อง re-read 720MB CSV.<br>
+    <b>3 layers</b> → bug ที่ Gold rebuild แค่ Gold (ไม่กี่นาที), bug ที่ Silver rebuild Silver+Gold. <b>Checkpoint ระหว่างชั้น = isolation + replay</b>.</p>
+  </div>
+  <div class="panel2">
+    <h4>Decision 2 · Why partition fact by department, not user_id?</h4>
+    <p>21 departments = balanced partition (~1.5M rows ต่อ partition). User_id 200K → 200K partitions = small-files problem.
+    Choose partition column ตาม <b>query pattern</b> + <b>cardinality</b> ที่เหมาะ (10–10,000 unique values).</p>
+  </div>
+  <div class="panel2">
+    <h4>Decision 3 · broadcast join เมื่อไหร่?</h4>
+    <p>Right-side &lt; 10MB (default <code>autoBroadcastJoinThreshold</code>). aisles (2.5KB), departments (270B), products (2MB), dim_products (~2MB) — broadcast หมด.
+    Order_products (577MB) ต้อง sort-merge.</p>
+  </div>
+  <div class="panel2">
+    <h4>Decision 4 · ทำไมไม่ใช้ Spark SQL ทั้งหมด?</h4>
+    <p>DataFrame API + functions library (<code>F.col</code>, <code>F.broadcast</code>) ให้ <b>type checking + IDE completion</b> + control fine-grained join hint. SQL อ่านง่ายกว่า แต่ debug ลำบาก. ในงานจริง mix ทั้งสอง: prototype ด้วย SQL, productionize ด้วย DataFrame API.</p>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="qa">8. Interview Q&amp;A — สิ่งที่ interviewer จะถามใน "ทุก step"</h2>
+
+<h3>About data understanding (DE ที่เข้าใจข้อมูล)</h3>
+<div class="qa">
+  <div class="q">Q: Dataset ที่ใช้คืออะไร ทำไมเลือกอันนี้?</div>
+  <div class="a">Instacart Market Basket จาก Kaggle 2017. เลือกเพราะ schema กับ business question ใกล้ retail/FMCG ที่สุด — มี product hierarchy 3 ชั้น, basket data, reorder signal, temporal pattern. ตรงกับ POS feed ของ 7-Eleven ที่ Gosoft ดูแล.</div>
+</div>
+<div class="qa">
+  <div class="q">Q: <code>order_products__prior</code> กับ <code>order_products__train</code> ต่างกันยังไง?</div>
+  <div class="a">เป็นการ split สำหรับ Kaggle ML competition: prior = order ก่อนหน้า (ใช้ฝึก), train = order ล่าสุดของลูกค้า (target predict ว่าซื้ออะไร). ใน DE pipeline ผมใช้ <b>prior เท่านั้น</b> เพราะอยากดูพฤติกรรมจริงของ order set ใหญ่ (32M rows) ไม่ใช่ ML target.</div>
+</div>
+<div class="qa">
+  <div class="q">Q: <code>days_since_prior_order</code> มี null ตั้ง 200K rows ใน orders — แปลว่าอะไร?</div>
+  <div class="a">Null คือ <b>order แรกของ user</b> (ไม่มี prior). 200K ≈ จำนวน user ทั้งหมด — ตรงกัน, ไม่ใช่ data quality issue. ตอนทำ Silver dim_users ใช้ <code>avg(days_since_prior_order)</code> — Spark <b>ignore null อัตโนมัติ</b> ใน aggregate functions, จึงไม่ต้อง filter.</div>
+</div>
+
+<h3>About Spark / PySpark</h3>
+<div class="qa">
+  <div class="q">Q: Why Spark over traditional ETL (SSIS / ADF copy activity)?</div>
+  <div class="a">Spark = <b>distributed in-memory</b> + lazy evaluation + Catalyst optimizer. 32M rows × join × group ทำ in-memory ใน minutes. ETL traditional ส่วนใหญ่ row-by-row หรือ pipe via SQL Server engine — bottleneck ที่ disk I/O. ทั้งคู่ทำ business logic ได้, แต่ Spark scale ที่ TB-PB ส่วน traditional cap ที่ GB.</div>
+</div>
+<div class="qa">
+  <div class="q">Q: RDD vs DataFrame vs Dataset?</div>
+  <div class="a">
+    <b>RDD</b> — low-level, immutable distributed collection ของ object. ไม่มี schema, ไม่มี Catalyst optimizer. ใช้เฉพาะ unstructured data หรือ custom partitioner.<br>
+    <b>DataFrame</b> — RDD + schema (ตาราง). มี Catalyst (logical → physical plan optimization) + Tungsten (off-heap memory). 90% ของงาน DE ใช้อันนี้.<br>
+    <b>Dataset</b> — DataFrame + compile-time type safety (เฉพาะ Scala/Java). PySpark ไม่มี Dataset API.
+  </div>
+</div>
+<div class="qa">
+  <div class="q">Q: Narrow vs wide transformation?</div>
+  <div class="a">
+    <b>Narrow</b>: 1 input partition → 1 output partition. ไม่มี shuffle. เช่น <code>filter</code>, <code>select</code>, <code>withColumn</code>, <code>map</code>.<br>
+    <b>Wide</b>: ต้อง shuffle ข้าม executor. เช่น <code>groupBy</code>, <code>join</code> (sort-merge), <code>distinct</code>, <code>orderBy</code>, <code>repartition</code>.<br>
+    <b>Why it matters</b>: shuffle = network + disk I/O = แพงสุด. ใน pipeline นี้ผมลด shuffle ด้วย: filter early, broadcast join (lookup 5 ตาราง), partition-by-department ที่ Silver (groupBy(dept) ภายหลังกลายเป็น narrow).
+  </div>
+</div>
+<div class="qa">
+  <div class="q">Q: How does partitioning work in Spark?</div>
+  <div class="a">
+    Spark แบ่งข้อมูลเป็น partition (ค่า default = ขนาด HDFS block / ค่า <code>spark.sql.shuffle.partitions</code>). 1 partition = 1 task ที่ executor ทำขนาน.<br>
+    <b>2 ระดับ</b>: (1) <b>memory partition</b> — ตอน read/shuffle, (2) <b>storage partition</b> — <code>partitionBy(col)</code> ที่ write → directory layout เช่น <code>department=produce/</code>.<br>
+    <b>Storage partition</b> สำคัญเพราะ Spark ทำ <b>partition pruning</b>: <code>WHERE department='produce'</code> → อ่านแค่ 1 ใน 21 directory.
+  </div>
+</div>
+<div class="qa">
+  <div class="q">Q: How would you optimize a slow Spark job?</div>
+  <div class="a">
+    Checklist 6 อย่าง:<br>
+    1. <b>Read explain plan</b> — มี <code>SortMergeJoin</code> ที่ควรเป็น <code>BroadcastHashJoin</code> ไหม?<br>
+    2. <b>Filter / select early</b> ก่อน join (predicate + projection pushdown)<br>
+    3. <b>Broadcast small table</b> &lt; 10MB<br>
+    4. <b>Check partition skew</b> — ถ้า key ตัวเดียว 80% ของ rows → salting<br>
+    5. <b>Right number of partitions</b> — ขนาด ~128MB ต่อ partition<br>
+    6. <b>Cache</b> ถ้าใช้ DataFrame ซ้ำ &gt; 1 ครั้ง<br>
+    <b>โยงประสบการณ์เดิม:</b> ที่ Feedback180 ผม optimize Tableau dashboard 2.5h → 30min ด้วย same principles — push aggregate ลงใน source DB (Postgres) แทนทำใน Tableau → ลด data scanned + ใช้ index. หลักการคล้ายกัน.
+  </div>
+</div>
+
+<h3>About Delta Lake</h3>
+<div class="qa">
+  <div class="q">Q: What is Delta Lake? Why not just Parquet?</div>
+  <div class="a">
+    Delta = Parquet + <b>transaction log</b> (<code>_delta_log/</code> เป็น JSON) + <b>checkpoint</b> file ทุก 10 commits.<br>
+    Delta ให้: ACID, schema enforcement, time travel, MERGE/UPDATE/DELETE, Z-ORDER, OPTIMIZE.<br>
+    Parquet เปล่าให้แค่: columnar storage. ถ้า write ครึ่งทาง crash, reader เห็น partial file = corrupt. ถ้าจะ UPDATE 1 row ต้อง rewrite ทั้ง partition.<br>
+    <b>ใน pipeline นี้</b> ผมใช้ Parquet ที่ Bronze (raw, append-only) และ Delta ที่ Silver/Gold (ต้อง overwrite + history).
+  </div>
+</div>
+<div class="qa">
+  <div class="q">Q: ใน <code>_delta_log</code> มีอะไร?</div>
+  <div class="a">JSON ทุก commit list "เพิ่มไฟล์ X, ลบไฟล์ Y". Reader อ่าน log ไล่จาก checkpoint ล่าสุด → รู้ว่า version ปัจจุบันมีไฟล์ Parquet ไหนบ้าง. <b>Time travel</b> = อ่าน log ถึง version N แทน latest.</div>
+</div>
+
+<h3>About Architecture (Medallion)</h3>
+<div class="qa">
+  <div class="q">Q: ทำไมต้อง 3 layers? 1 layer ไม่พอเหรอ?</div>
+  <div class="a">
+    Bronze เก็บ <b>history + replay capability</b> (ถ้า source หาย ก็ rebuild จาก Bronze ได้).<br>
+    Silver แยก <b>data hygiene</b> (cleansing, dedup) ออกจาก <b>business logic</b> — tester / analyst test schema เสถียรได้โดยไม่กระทบ Bronze.<br>
+    Gold คือ <b>contract กับ BI</b> — ถ้า dashboard ขึ้น KPI ผิด ก็แก้ที่ Gold ไม่ต้องไปยุ่ง raw.<br>
+    <b>Trade-off:</b> เพิ่ม latency + storage (3 copies). คุ้มเมื่อ pipeline จะ run ยาวเป็นปี + มีคน &gt; 1 ทีมใช้.
+  </div>
+</div>
+<div class="qa">
+  <div class="q">Q: ทำไมไม่เก็บ Gold ใน Postgres ตรงๆ?</div>
+  <div class="a">
+    Gold เป็น <b>source of truth สำหรับ analytics</b>. Postgres เป็น <b>serving cache</b>. 2 ตัวมี role ต่างกัน:<br>
+    Gold (Delta) — versioned, time-travel, audit. ML team อ่านได้ตรงผ่าน Spark.<br>
+    Postgres — fast point query สำหรับ BI dashboard. ไม่ต้องเก็บ history เก่ามาก.<br>
+    ถ้า BI ผิด → query Gold ย้อน version. ถ้า Postgres หาย → rebuild จาก Gold ใน 1 คำสั่ง.
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="insights">9. Three senior insights you generated</h2>
+
+<div class="insight">
+  <div class="head">Insight 1 · DE ต้องเข้าใจข้อมูลไม่ต่างจาก DA หรือ DS</div>
+  <p>การเลือก partition key (department), การออกแบบ aggregate, การ derive dim_users จาก orders — ทุก decision ต้องรู้ก่อนว่า "<b>คำถามธุรกิจคืออะไร</b>" ถ้า DE มอง pipeline เป็นแค่ "ย้ายข้อมูล" จะออกแบบไม่ตรง use case → analyst ต้อง re-aggregate ทุกครั้ง → cost ทีมรวมพุ่ง.</p>
+  <p class="mute">Use this in interview when asked "What makes a good DE?"</p>
+</div>
+
+<div class="insight">
+  <div class="head">Insight 2 · CTE / WITH ใน SQL = Medallion architecture ในระดับ query</div>
+  <p>SQL CTE ที่เคยใช้ (Stage 1 → Clean → Aggregate → Final) เป็น <b>Bronze → Silver → Gold ในระดับ in-memory query</b>. หลักการเดียวกัน — แค่ scale ต่างกัน:</p>
+  <ul>
+    <li>CTE = single query, in-memory, ตายเมื่อ query จบ</li>
+    <li>Medallion = persistent storage, cross-query, cross-tool, มี history</li>
+  </ul>
+  <p>ดังนั้น "experience SQL 5x optimization" ของคุณที่ Feedback180 = <b>foundation เดียวกันกับ Spark optimization</b> — ต่างที่ engine.</p>
+  <p class="mute">Use this when asked "How does your past experience translate to Spark?"</p>
+</div>
+
+<div class="insight">
+  <div class="head">Insight 3 · Data layer ดี → MLflow ใช้ต่อได้ → ลดเวลา/cost ของทีมรวม</div>
+  <p>ถ้า Silver clean + schema เสถียร → DS ใช้ทำ feature engineering ได้ทันที (ไม่ต้อง re-clean). ถ้า Gold มี customer_segment, sku_performance → DS train churn / recommendation ได้โดยใช้ feature ที่ DE pre-aggregate ให้แล้ว.</p>
+  <p>นี่คือเหตุผลที่ Databricks รวม Delta + MLflow + Feature Store ใน platform เดียว — เพราะ <b>data layer คือ foundation ของ ML</b>. DE ที่ดี = enabler ของทีม DS, ไม่ใช่แค่คน upstream.</p>
+  <p class="mute">Use this when asked "How do you collaborate with DS / business teams?"</p>
+</div>
+
+<hr>
+
+<div class="panel">
+  <h3>Quick reference — สิ่งที่ต้องตอบได้ใน 30 วินาที</h3>
+  <ol>
+    <li><b>Dataset</b> = Instacart, Kaggle 2017, ใกล้ 7-Eleven POS</li>
+    <li><b>Bronze</b> = CSV → Parquet, raw, no transform, replay-friendly</li>
+    <li><b>Silver</b> = Delta, denormalize + dedup + audit, <code>fact_order_items</code> partitioned by department</li>
+    <li><b>Gold</b> = Delta, 4 marts ตอบ 4 business questions, aggregated ก่อน BI</li>
+    <li><b>Postgres</b> = serving via JDBC, top-N + summary เท่านั้น</li>
+    <li><b>Why Delta</b> = ACID + time travel + MERGE — Parquet ไม่มี</li>
+    <li><b>Why partition by dept</b> = balanced (21), match query pattern</li>
+    <li><b>Why broadcast</b> = aisles/dept/products เล็ก &lt; 10MB</li>
+  </ol>
+</div>
+
+<div class="footer">
+  Project: <code>DE_SparktoDatabrick_FMCG</code> · Author: Rattapon · Built for Gosoft Data Engineer interview prep · Date: 2026-05-03
+</div>
+
+</div>
+</body>
+</html>

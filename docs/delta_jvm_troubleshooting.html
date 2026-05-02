@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Delta + PySpark JVM Troubleshooting — Field Note</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root{
+    --bg:#0f1115; --panel:#161a22; --panel2:#1c2230; --line:#2a3142;
+    --ink:#e6edf3; --mute:#9aa4b2; --accent:#6ea8ff; --good:#5fd07a; --bad:#ff7a7a;
+    --warn:#ffd58a; --code:#0b0d12;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans Thai",sans-serif;
+    line-height:1.6;font-size:15px}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 24px 80px}
+  h1{font-size:30px;margin:0 0 6px}
+  h2{font-size:22px;margin:36px 0 12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  h3{font-size:17px;margin:22px 0 8px;color:var(--accent)}
+  h4{font-size:14px;margin:14px 0 6px;color:var(--mute);text-transform:uppercase;letter-spacing:.5px}
+  small,.mute{color:var(--mute)}
+  code,pre{font-family:ui-monospace,Menlo,Consolas,"Cascadia Mono",monospace;font-size:13.5px}
+  code{background:var(--code);padding:1px 6px;border-radius:4px;color:#cfe5ff}
+  pre{background:var(--code);padding:14px 16px;border-radius:8px;overflow:auto;border:1px solid var(--line);
+    color:#cfe5ff;line-height:1.55}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+  .panel2{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:10px 0}
+  table{border-collapse:collapse;width:100%;margin:8px 0 10px;font-size:14px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#1a2030;color:var(--accent);font-weight:600}
+  tr:nth-child(even) td{background:#171c27}
+  .why{border-left:3px solid var(--accent);padding:8px 12px;background:#13192a;margin:10px 0;border-radius:0 6px 6px 0}
+  .why b{color:var(--accent)}
+  .err{border-left:3px solid var(--bad);padding:8px 12px;background:#1f1416;margin:10px 0;border-radius:0 6px 6px 0}
+  .ok{border-left:3px solid var(--good);padding:8px 12px;background:#13201a;margin:10px 0;border-radius:0 6px 6px 0}
+  .warn{border-left:3px solid var(--warn);padding:8px 12px;background:#221d10;margin:10px 0;border-radius:0 6px 6px 0}
+  .step{display:flex;gap:14px;margin:14px 0}
+  .step .num{flex:0 0 36px;height:36px;line-height:36px;text-align:center;background:var(--accent);
+    color:#0b0d12;border-radius:50%;font-weight:800;font-size:16px}
+  .step .body{flex:1}
+  .check{color:var(--good);font-weight:700}
+  .cross{color:var(--bad);font-weight:700}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;margin-right:6px}
+  .pill.tag{background:#22293a;color:var(--mute);border:1px solid var(--line)}
+  .pill.bug{background:rgba(255,122,122,.16);color:#ff9a9a;border:1px solid rgba(255,122,122,.4)}
+  .pill.fix{background:rgba(95,208,122,.14);color:#86e09b;border:1px solid rgba(95,208,122,.4)}
+  hr{border:none;border-top:1px dashed var(--line);margin:24px 0}
+  .footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--mute);font-size:13px}
+  .ascii{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px;
+    white-space:pre;font-size:13px;color:#cfe5ff;overflow:auto}
+  .toc{background:#141926;border:1px solid var(--line);border-radius:8px;padding:14px 18px}
+  .toc a{color:#9bc4ff;text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Field Note · Delta + PySpark JVM Troubleshooting</h1>
+  <p class="mute">Project DE_SparktoDatabrick_FMCG · Date 2026-05-03 · Notebook: <code>Checking_before_04.ipynb</code></p>
+  <span class="pill bug">BUG SOLVED</span>
+  <span class="pill tag">PySpark</span>
+  <span class="pill tag">Delta Lake</span>
+  <span class="pill tag">JVM lifecycle</span>
+  <span class="pill tag">Jupyter</span>
+</header>
+
+<div class="toc panel">
+  <b>Contents</b>
+  <ol>
+    <li><a href="#symptom">Symptom — สิ่งที่เห็น</a></li>
+    <li><a href="#first-attempt">Attempt #1 — local jar paths (fail)</a></li>
+    <li><a href="#second-attempt">Attempt #2 — switch to <code>spark.jars.packages</code> (still fail)</a></li>
+    <li><a href="#diagnostic">Diagnostic ที่ลอกหน้ากากของบั๊ก</a></li>
+    <li><a href="#root-cause">Root cause — PySpark ↔ JVM lifecycle</a></li>
+    <li><a href="#fix">Fix ที่ทำให้รอด</a></li>
+    <li><a href="#verify">Verify pattern (เพิ่มทุก notebook)</a></li>
+    <li><a href="#fallback">Fallback (ถ้า Maven block ทาง corporate proxy)</a></li>
+    <li><a href="#takeaway">Interview takeaway</a></li>
+  </ol>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="symptom">1. Symptom</h2>
+
+<div class="panel">
+  <p>เปิด notebook ใหม่ <code>Checking_before_04.ipynb</code> เพื่ออ่าน Silver Delta table ตรวจ orphan rows ก่อนทำ Gold layer. รันแล้วได้ error ดังนี้:</p>
+
+<pre>Py4JJavaError: An error occurred while calling o39.load.
+: org.apache.spark.SparkClassNotFoundException: [DATA_SOURCE_NOT_FOUND]
+  Failed to find the data source: delta.
+Caused by: java.lang.ClassNotFoundException: delta.DefaultSource</pre>
+
+  <div class="err"><b>สิ่งสับสน:</b> ใน notebook <code>03_silver_file.ipynb</code> โค้ดแบบเดียวกันรันได้ — ทำไมที่นี่ fail?</div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="first-attempt">2. Attempt #1 — point ไปที่ jar local</h2>
+
+<div class="panel">
+<pre>pg_jar      = f"{work_dir}/postgresql-42.7.0.jar"
+delta_jar   = f"{work_dir}/delta-spark_2.12-3.2.0.jar"   # ← ไม่มีไฟล์จริง
+storage_jar = f"{work_dir}/delta-storage-3.2.0.jar"      # ← ไม่มีไฟล์จริง
+all_jars    = ",".join([pg_jar, delta_jar, storage_jar])
+
+spark = (SparkSession.builder
+         .config("spark.jars", all_jars)
+         ...)</pre>
+
+  <div class="err"><b>ปัญหา:</b> cell แรกของ notebook ทำ <code>!wget</code> เฉพาะ <code>postgresql-42.7.0.jar</code> — ไม่ได้ download Delta jars 2 ตัว → path ใน <code>all_jars</code> ชี้ไปที่ไฟล์ที่<b>ไม่มีอยู่จริง</b></div>
+
+  <div class="why"><b>Lesson 1:</b> Spark <code>spark.jars</code> <span class="cross">ไม่ throw error ตอน startup</span> ถ้าไฟล์ไม่มี — มัน silent-skip. กว่าจะรู้คือตอน <code>format("delta")</code> หาคลาสไม่เจอ.<br>
+  <b>How to apply:</b> หลัง <code>getOrCreate()</code> เสมอ list jars ที่ load จริง — ดูในข้อ 7</div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="second-attempt">3. Attempt #2 — switch ไปใช้ <code>spark.jars.packages</code></h2>
+
+<div class="panel">
+  <p>เปลี่ยนเป็น Maven coordinate ให้ Spark download Delta + dependencies ครบในคำสั่งเดียว (เหมือน notebook 03 ที่ work):</p>
+
+<pre>spark = (SparkSession.builder
+         .config("spark.jars", pg_jar)
+         .config("spark.jars.packages", "io.delta:delta-spark_2.12:3.2.0")
+         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+         .getOrCreate())</pre>
+
+  <p>เพิ่ม <code>SparkSession.builder.getOrCreate().stop()</code> เพื่อ kill session เก่าก่อน. รันใหม่ — ยัง <b>error เดิม</b>.</p>
+
+  <div class="err"><b>งงตรง:</b> config มา, <code>stop()</code> ทำแล้ว, ทำไมยัง fail?</div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="diagnostic">4. Diagnostic ที่ลอกหน้ากากของบั๊ก</h2>
+
+<div class="panel">
+  <p>เพิ่ม 3 บรรทัดหลัง <code>getOrCreate()</code>:</p>
+
+<pre>print("Delta packages:", spark.sparkContext.getConf().get("spark.jars.packages"))
+print("Loaded jars (first 3):")
+for j in spark.sparkContext._jsc.sc().listJars().toString().split(",")[:3]:
+    print(" ", j.strip())</pre>
+
+  <h4>Output</h4>
+<pre>Delta packages: io.delta:delta-spark_2.12:3.2.0
+Loaded jars (first 3):
+  Vector(spark://a41fb29cf9be:39543/jars/postgresql-42.7.0.jar)</pre>
+
+  <div class="warn"><b>เห็นความขัดแย้งแล้ว:</b><br>
+  ✅ <code>spark.jars.packages</code> <b>ถูก register</b> ใน SparkConf<br>
+  <span class="cross">✗</span> แต่ <b>jar ไม่ได้ load เข้า classpath จริง</b> — มีแค่ postgresql.jar เดียว<br>
+  ⇒ Config มา แต่ Ivy ไม่ resolve = JVM ไม่รู้จัก Delta จริงๆ</div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="root-cause">5. Root cause — PySpark ↔ JVM lifecycle</h2>
+
+<div class="panel">
+  <h3>Architecture</h3>
+<pre class="ascii">┌──────────────────────────────────────────────────────────┐
+│  Jupyter kernel (Python process)                         │
+│  ┌────────────┐         py4j           ┌────────────┐    │
+│  │  PySpark   │ ←──── socket ────→     │   JVM      │    │
+│  │  (Python)  │                        │  (driver)  │    │
+│  └────────────┘                        │  ──────    │    │
+│                                        │  classpath │    │
+│                                        │  เซ็ตตอน    │    │
+│                                        │  spawn     │    │
+│                                        │  เท่านั้น    │    │
+│                                        └────────────┘    │
+└──────────────────────────────────────────────────────────┘</pre>
+
+  <h3>เหตุการณ์ที่เกิดขึ้นจริง (timeline)</h3>
+  <ol>
+    <li>รัน Attempt #1 → JVM spawn ครั้งแรก, classpath = <code>[pyspark-internal jars] + [postgresql.jar]</code> (Delta jars path ไม่มีไฟล์ → skip)</li>
+    <li><code>format("delta")</code> fail</li>
+    <li>เขียน Attempt #2, ใส่ <code>spark.jars.packages</code>, เรียก <code>stop()</code>, แล้ว <code>getOrCreate()</code> ใหม่</li>
+    <li><b>JVM driver ยังเป็นตัวเดิม</b> (py4j socket ยังเชื่อมอยู่). <code>stop()</code> แค่ shutdown SparkContext (DAGScheduler, Executors) — ไม่ kill JVM</li>
+    <li><code>getOrCreate()</code> register <code>spark.jars.packages</code> ลง SparkConf ของ context ใหม่</li>
+    <li><b>แต่ Ivy resolution มันรันตอน <code>spark-submit</code> bootstrap เท่านั้น</b> — ไม่ใช่ตอน builder รัน. ดังนั้น Delta jar ไม่ถูก download/load</li>
+    <li>Classpath ของ JVM ยังเป็นเดิม → <code>format("delta")</code> fail อีก</li>
+  </ol>
+
+  <table>
+    <tr><th>Action</th><th>Python process</th><th>JVM driver</th><th>Classpath</th><th>Delta jar</th></tr>
+    <tr><td><code>spark.stop()</code></td><td>alive</td><td>alive</td><td>เดิม</td><td><span class="cross">ไม่มี</span></td></tr>
+    <tr><td><code>del spark</code></td><td>alive</td><td>alive</td><td>เดิม</td><td><span class="cross">ไม่มี</span></td></tr>
+    <tr><td><code>SparkConf().setAll(...)</code> ใหม่</td><td>alive</td><td>alive</td><td>เดิม</td><td><span class="cross">ไม่มี</span></td></tr>
+    <tr><td><b>Kernel Restart</b></td><td><b>ใหม่</b></td><td><b>ใหม่</b></td><td><b>ใหม่ (มี Ivy resolve)</b></td><td><span class="check">✓ load</span></td></tr>
+  </table>
+
+  <div class="why"><b>One-line root cause:</b> <code>spark.jars.packages</code> resolve dependencies ผ่าน Ivy <b>ตอน JVM bootstrap เท่านั้น</b>. JVM ที่ค้างอยู่ใน Jupyter kernel ไม่ pick up config ใหม่ — ต้อง kill JVM = restart kernel</div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="fix">6. Fix ที่ทำให้รอด</h2>
+
+<div class="panel">
+  <span class="pill fix">FIX</span>
+
+  <div class="step">
+    <div class="num">1</div>
+    <div class="body">
+      <h3>Restart Jupyter kernel</h3>
+      <p>เมนู <b>Kernel → Restart Kernel</b>. ห้ามใช้แค่ "Run All" — ต้อง stop JVM ของจริง</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">2</div>
+    <div class="body">
+      <h3>รัน setup cell เป็น cell แรก</h3>
+<pre>import os
+from pyspark.sql import SparkSession, functions as F
+
+pg_jar = f"{os.getcwd()}/postgresql-42.7.0.jar"
+
+spark = (SparkSession.builder
+         .appName("Gold-PreCheck")
+         .config("spark.jars", pg_jar)
+         .config("spark.jars.packages", "io.delta:delta-spark_2.12:3.2.0")
+         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+         .config("spark.driver.memory", "4g")
+         .getOrCreate())</pre>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="num">3</div>
+    <div class="body">
+      <h3>รัน read cell ตามปกติ</h3>
+<pre>SILVER = "/home/jovyan/work/data/silver"
+fact = spark.read.format("delta").load(f"{SILVER}/fact_order_items")
+print(f"Silver fact rows: {fact.count():,}")
+
+orphan = fact.filter(F.col("department").isNull()).count()
+print(f"Orphan rows (NULL department): {orphan:,}")
+print(f"Orphan %: {orphan / fact.count() * 100:.4f}%")</pre>
+      <div class="ok"><b>✅ ผลลัพธ์:</b> Silver fact rows: 32,434,489 · Orphan: 3 rows · 0.0000% — ผ่าน</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="verify">7. Verify pattern — เพิ่มทุกครั้งที่ start session</h2>
+
+<div class="panel">
+  <p>เพิ่ม 3 บรรทัดหลัง <code>getOrCreate()</code> เป็น guard เพื่อ fail-fast แทน fail-late ที่ <code>format("delta")</code>:</p>
+
+<pre>loaded = spark.sparkContext._jsc.sc().listJars().toString()
+assert "delta-spark" in loaded, f"❌ Delta NOT on classpath. Got: {loaded[:200]}"
+print("✅ Delta jar verified on classpath")</pre>
+
+  <div class="why"><b>Why:</b> error ที่ <code>format("delta")</code> เกิดหลัง pipeline รันไปแล้ว 30 วินาที (count, filter, etc.). assert ตรวจตอน startup = error ภายใน 5 วินาที, debugging cycle เร็วขึ้นมาก<br>
+  <b>How to apply:</b> ใส่ guard ทุก notebook ที่ใช้ Delta. หลักการ "fail fast at boundary" (boundary = config ↔ classpath)</div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="fallback">8. Fallback — ถ้า Maven block (offline / corporate proxy)</h2>
+
+<div class="panel">
+  <p>กรณีอยู่ใน network ที่ Ivy ดาวน์โหลด Maven Central ไม่ได้:</p>
+
+  <h4>Step A — manual download jars (ทำครั้งเดียว)</h4>
+<pre>!wget -nc https://repo1.maven.org/maven2/io/delta/delta-spark_2.12/3.2.0/delta-spark_2.12-3.2.0.jar
+!wget -nc https://repo1.maven.org/maven2/io/delta/delta-storage/3.2.0/delta-storage-3.2.0.jar</pre>
+
+  <h4>Step B — restart kernel แล้วใช้ <code>spark.jars</code> (ไม่ใช่ packages)</h4>
+<pre>all_jars = ",".join([
+    f"{os.getcwd()}/postgresql-42.7.0.jar",
+    f"{os.getcwd()}/delta-spark_2.12-3.2.0.jar",
+    f"{os.getcwd()}/delta-storage-3.2.0.jar",
+])
+spark = (SparkSession.builder
+         .config("spark.jars", all_jars)
+         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension")
+         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog")
+         .config("spark.driver.memory", "4g")
+         .getOrCreate())</pre>
+
+  <table>
+    <tr><th>Method</th><th>Pros</th><th>Cons</th></tr>
+    <tr><td><code>spark.jars.packages</code> (Maven coord)</td><td>สั้น, deps ครบอัตโนมัติ, cache ที่ <code>~/.ivy2</code></td><td>ต้องมี internet ครั้งแรก, resolve ตอน JVM boot</td></tr>
+    <tr><td><code>spark.jars</code> (local path)</td><td>offline-friendly, deterministic</td><td>ต้อง download dependencies เองทุกตัว</td></tr>
+  </table>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="takeaway">9. Interview takeaway</h2>
+
+<div class="panel">
+  <h3>คำถามสมมุติ: "ถ้าเจอ <code>ClassNotFoundException: delta.DefaultSource</code> ใน notebook คุณ debug ยังไง?"</h3>
+
+  <div class="ok">
+    <p><b>คำตอบ (30 วินาที):</b></p>
+    <ol>
+      <li>เช็ค <b>config registered จริงไหม</b> — <code>spark.sparkContext.getConf().get("spark.jars.packages")</code></li>
+      <li>เช็ค <b>jar load จริงไหม</b> — <code>spark.sparkContext._jsc.sc().listJars()</code></li>
+      <li>ถ้า config มาแต่ jar ไม่ load = <b>JVM ค้างจาก session ก่อน</b> → restart kernel</li>
+      <li>เพิ่ม <code>assert "delta-spark" in listJars</code> เป็น guard — fail fast ดีกว่า fail-late</li>
+    </ol>
+  </div>
+
+  <h3>ทำไมเรื่องนี้แสดง depth ของ DE</h3>
+  <p>คน junior จะตอบแค่ "เพิ่ม <code>spark.jars.packages</code> สิ" — ตอบจริงแต่ตื้น. คน senior อธิบาย <b>JVM ↔ py4j ↔ Python lifecycle</b> ได้, รู้ว่า:</p>
+  <ul>
+    <li><code>SparkSession.stop()</code> ≠ kill JVM</li>
+    <li><code>spark.jars.packages</code> resolve ตอน <code>spark-submit</code> bootstrap, ไม่ใช่ตอน builder</li>
+    <li>Jupyter kernel = 1 Python process = 1 JVM driver per kernel lifetime</li>
+    <li>Verify pattern <code>listJars</code> เป็น defensive coding ที่ทำให้ debug cycle เร็ว</li>
+  </ul>
+  <p>นี่คือคำตอบที่<b>แยก DE ที่ใช้ Spark "เป็น"</b> ออกจาก<b> DE ที่ "เข้าใจ" Spark architecture</b></p>
+
+  <h3>โยงประสบการณ์เดิม (Feedback180)</h3>
+  <div class="why">"หลักการ fail-fast guard ที่ผมใช้ตรวจ Delta load มันคือไอเดียเดียวกับการ <b>validate config ตอน app startup</b> ใน FastAPI — ผมเคยเจอเคส env var ขาด, ค้นพบตอน request หล่นแทนที่จะเจอตอน boot. หลังจากนั้นผมใส่ <code>pydantic.BaseSettings</code> validation ทุก service. ที่ Spark ก็เป็นหลักการเดียวกัน — แค่ boundary คือ classpath แทน env var"</div>
+</div>
+
+<hr>
+
+<div class="panel">
+  <h3>Quick reference card</h3>
+  <table>
+    <tr><th>เห็น symptom</th><th>คาดเดา root cause</th><th>action</th></tr>
+    <tr><td><code>ClassNotFoundException</code></td><td>jar ไม่อยู่ใน classpath</td><td>verify <code>listJars()</code></td></tr>
+    <tr><td>config set แต่ jar ไม่ load</td><td>JVM ค้างจาก session เก่า</td><td>restart kernel</td></tr>
+    <tr><td>jar local path ไม่ throw error</td><td>Spark silent-skip jar ที่ไม่มี</td><td>verify ด้วย <code>listJars()</code></td></tr>
+    <tr><td>Maven download fail</td><td>offline / proxy</td><td>manual <code>!wget</code> + <code>spark.jars</code></td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  Field note · Author: Rattapon · Solved: 2026-05-03 · For Gosoft DE interview prep · See also: <a href="insight_summarise.html" style="color:#9bc4ff">insight_summarise.html</a>
+</div>
+
+</div>
+</body>
+</html>
