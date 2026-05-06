@@ -1,0 +1,229 @@
+<mxfile host="app.diagrams.net" modified="2026-05-07T00:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+  <diagram name="Production Architecture" id="prod-arch">
+    <mxGraphModel dx="1422" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1700" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Production Pipeline Architecture &#x2014; DE_SparktoDatabrick_FMCG&#xa;&lt;span style=&quot;font-size:13px;font-weight:normal&quot;&gt;What real DE production looks like vs what&apos;s in this repo&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1620" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend-bg" value="" style="rounded=1;fillColor=#fafafa;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="1340" y="100" width="320" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" value="Legend" style="text;fontSize=13;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="1355" y="105" width="100" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="lg1" value="" style="rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="1355" y="135" width="22" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="lg1-t" value="✓ in repo (working today)" style="text;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="1385" y="133" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg2" value="" style="rounded=0;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="1355" y="160" width="22" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="lg2-t" value="◐ partial / stub in repo" style="text;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="1385" y="158" width="260" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="lg3" value="" style="rounded=0;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="1355" y="185" width="22" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="lg3-t" value="✗ production-only (missing)" style="text;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="1385" y="183" width="260" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sec1" value="① Schedule &amp; Orchestration" style="text;align=left;fontSize=15;fontStyle=1;fontColor=#1a1a1a" vertex="1" parent="1">
+          <mxGeometry x="40" y="105" width="500" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="trigger" value="Cron / Event Trigger&#xa;&lt;span style=&quot;font-size:10px&quot;&gt;daily 02:00 / file landing / Kafka topic&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="40" y="140" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="orch" value="Orchestrator&#xa;&lt;b&gt;Airflow / Databricks Workflows&lt;/b&gt;&#xa;&lt;span style=&quot;font-size:10px&quot;&gt;DAG · dependency · retry · SLA&lt;br/&gt;◐ stub: pipelines/run_pipeline.py&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=12" vertex="1" parent="1">
+          <mxGeometry x="280" y="140" width="280" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="arr-tr-or" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2" edge="1" parent="1" source="trigger" target="orch">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sec2" value="② Pipeline Tasks (the actual code that runs Spark)" style="text;align=left;fontSize=15;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="260" width="700" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="bronze" value="&lt;b&gt;Bronze&lt;/b&gt;&#xa;01_bronze.py&#xa;&lt;span style=&quot;font-size:10px&quot;&gt;CSV → Parquet&lt;br/&gt;preserve raw fidelity&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="40" y="295" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="silver" value="&lt;b&gt;Silver&lt;/b&gt;&#xa;02_silver.py&#xa;&lt;span style=&quot;font-size:10px&quot;&gt;UNION ALL · dedupe&lt;br/&gt;partition by department&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="260" y="295" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dq" value="&lt;b&gt;DQ Gate&lt;/b&gt;&#xa;Great Expectations&#xa;Soda Core&#xa;&lt;span style=&quot;font-size:10px&quot;&gt;✗ missing&lt;/span&gt;" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="500" y="295" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="gold" value="&lt;b&gt;Gold&lt;/b&gt;&#xa;03_gold.py&#xa;&lt;span style=&quot;font-size:10px&quot;&gt;4 marts: dept, sku,&lt;br/&gt;hourly, segment&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="720" y="295" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="serve" value="&lt;b&gt;Serve&lt;/b&gt;&#xa;04_serve.py&#xa;&lt;span style=&quot;font-size:10px&quot;&gt;Push Gold → Postgres&lt;br/&gt;kpi_* tables&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="940" y="295" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ar-bs" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2" edge="1" parent="1" source="bronze" target="silver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ar-sd" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2" edge="1" parent="1" source="silver" target="dq">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ar-dg" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2" edge="1" parent="1" source="dq" target="gold">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ar-gs" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeWidth=2" edge="1" parent="1" source="gold" target="serve">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ar-or-br" value="schedules" style="endArrow=classic;html=1;exitX=0;exitY=1;entryX=0.5;entryY=0;dashed=1;strokeColor=#666666;fontSize=10" edge="1" parent="1" source="orch" target="bronze">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sec3" value="③ Storage Layer (persisted data per medallion layer)" style="text;align=left;fontSize=15;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="395" width="700" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="raw-cyl" value="Raw CSV&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;data/raw/&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="60" y="430" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="bz-cyl" value="Bronze&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;Parquet&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="280" y="430" width="80" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sv-cyl" value="Silver&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;Delta · partitioned&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="540" y="430" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="gd-cyl" value="Gold&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;Delta · marts&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="760" y="430" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pg-cyl" value="Postgres&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;kpi_*&lt;/span&gt;" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="980" y="430" width="100" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ar-raw" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0.25;entryY=1;strokeColor=#999999" edge="1" parent="1" source="raw-cyl" target="bronze">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ar-bz" style="endArrow=classic;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;strokeColor=#999999" edge="1" parent="1" source="bz-cyl" target="silver">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ar-sv" style="endArrow=classic;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;strokeColor=#999999" edge="1" parent="1" source="sv-cyl" target="dq">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ar-gd" style="endArrow=classic;html=1;exitX=0.5;exitY=0;entryX=0.5;entryY=1;strokeColor=#999999" edge="1" parent="1" source="gd-cyl" target="gold">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sec4" value="④ Observability (every task emits to these in parallel)" style="text;align=left;fontSize=15;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="525" width="700" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="obs-bg" value="" style="rounded=1;fillColor=#fafafa;strokeColor=#cccccc;dashed=1" vertex="1" parent="1">
+          <mxGeometry x="40" y="555" width="640" height="240" as="geometry" />
+        </mxCell>
+
+        <mxCell id="logs-loc" value="Driver logs&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;logs/*.log + console&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="60" y="575" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="log-shp" value="Log shipper&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;Fluent Bit / Filebeat&lt;br/&gt;✗ missing&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="240" y="575" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="log-cen" value="Central log store&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;Datadog / CloudWatch&lt;br/&gt;Splunk / ELK · ✗ missing&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="440" y="575" width="220" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="met-em" value="Metrics emitter&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;StatsD / OTel client&lt;br/&gt;rows · duration · DQ&lt;br/&gt;✗ missing&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="60" y="655" width="160" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="met-tsdb" value="Time-series DB&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;Prometheus / Datadog Metrics&lt;br/&gt;✗ missing&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="260" y="655" width="220" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lin-em" value="Lineage emitter&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;OpenLineage / Spark listener&lt;br/&gt;✗ missing&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="60" y="745" width="180" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="lin-st" value="Lineage UI &#xa;Marquez / Unity Catalog · ✗ missing" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="280" y="745" width="380" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ar-l1" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5" edge="1" parent="1" source="logs-loc" target="log-shp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ar-l2" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5" edge="1" parent="1" source="log-shp" target="log-cen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ar-m1" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5" edge="1" parent="1" source="met-em" target="met-tsdb">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ar-li" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5" edge="1" parent="1" source="lin-em" target="lin-st">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sec5" value="⑤ Alerting &amp; Dashboards" style="text;align=left;fontSize=15;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="710" y="525" width="500" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dash" value="Dashboard&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;Grafana / Datadog&lt;br/&gt;throughput · latency · SLA · cost&lt;br/&gt;✗ missing&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="720" y="565" width="220" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="alert" value="Alerting Rules&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;PagerDuty / Opsgenie / Slack&lt;br/&gt;on failure · SLA breach · DQ violation&lt;br/&gt;✗ missing&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="970" y="565" width="240" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="oncall" value="On-call engineer&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;👤 ack &amp; investigate&lt;br/&gt;runbook + SLA clock&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="1240" y="565" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ar-da" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5" edge="1" parent="1" source="dash" target="alert">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ar-ao" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5" edge="1" parent="1" source="alert" target="oncall">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sec6" value="⑥ Secrets, Config &amp; Quality Tests" style="text;align=left;fontSize=15;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="710" y="665" width="500" height="25" as="geometry" />
+        </mxCell>
+
+        <mxCell id="secrets" value="Secret store&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;Vault · Databricks Secret Scope · AWS Secrets Manager&lt;br/&gt;◐ stub: hardcoded creds in 04_serve.py&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="720" y="700" width="340" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dbt-tests" value="dbt / unit tests / contract tests&#xa;&lt;span style=&quot;font-size:9px&quot;&gt;guard schema + business rules in CI&lt;br/&gt;✗ missing&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11" vertex="1" parent="1">
+          <mxGeometry x="1080" y="700" width="340" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="emit-edge1" style="endArrow=classic;html=1;dashed=1;strokeColor=#bbbbbb;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=1" edge="1" parent="1" source="bronze" target="logs-loc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="emit-edge2" style="endArrow=classic;html=1;dashed=1;strokeColor=#bbbbbb;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=1" edge="1" parent="1" source="silver" target="logs-loc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="emit-edge3" style="endArrow=classic;html=1;dashed=1;strokeColor=#bbbbbb;exitX=0.5;exitY=1;entryX=0.5;entryY=0;curved=1" edge="1" parent="1" source="gold" target="logs-loc">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="emit-label" value="logs/metrics/lineage emitted&#xa;from every task (driver-side)" style="text;fontSize=10;fontStyle=2;fontColor=#666666" vertex="1" parent="1">
+          <mxGeometry x="180" y="490" width="280" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dbx-note" value="🔵 Databricks-native shortcut&#xa;หลายตัวข้างบนมาฟรีถ้าทำงานบน Databricks เต็มตัว:&#xa;• Workflows = orchestrator&#xa;• Lakehouse Monitoring = DQ + drift dashboards&#xa;• Unity Catalog = lineage + secrets + audit&#xa;• System Tables = central audit / cost / usage logs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;align=left;spacingLeft=15;spacingTop=10" vertex="1" parent="1">
+          <mxGeometry x="1340" y="240" width="320" height="155" as="geometry" />
+        </mxCell>
+
+        <mxCell id="interview" value="🎤 Interview talking point&#xa;&quot;Repo เปิดมาเห็น Python logging + try/except + exit code 1 — เป็น skeleton ที่ scheduler กับ log shipper เก็บงานต่อได้.&#xa;Production ของจริงต้อง wrap ด้วย: orchestrator (Airflow / Workflows), centralized observability (logs + metrics + lineage), alerting (PagerDuty),&#xa;DQ gate (Great Expectations), secrets vault. ใน Databricks-native หลายตัวมาฟรี.&quot;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;align=left;spacingLeft=15;spacingTop=10" vertex="1" parent="1">
+          <mxGeometry x="40" y="820" width="1620" height="100" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
