@@ -315,7 +315,7 @@ spark = (SparkSession.builder
   </ul>
   <p>นี่คือคำตอบที่<b>แยก DE ที่ใช้ Spark "เป็น"</b> ออกจาก<b> DE ที่ "เข้าใจ" Spark architecture</b></p>
 
-  <h3>โยงประสบการณ์เดิม (Feedback180)</h3>
+  <h3>โยงประสบการณ์เดิม (Old place)</h3>
   <div class="why">"หลักการ fail-fast guard ที่ผมใช้ตรวจ Delta load มันคือไอเดียเดียวกับการ <b>validate config ตอน app startup</b> ใน FastAPI — ผมเคยเจอเคส env var ขาด, ค้นพบตอน request หล่นแทนที่จะเจอตอน boot. หลังจากนั้นผมใส่ <code>pydantic.BaseSettings</code> validation ทุก service. ที่ Spark ก็เป็นหลักการเดียวกัน — แค่ boundary คือ classpath แทน env var"</div>
 </div>
 

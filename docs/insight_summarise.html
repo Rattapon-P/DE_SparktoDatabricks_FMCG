@@ -272,7 +272,7 @@ dim_products (50K, broadcast)┘                                                
     <tr><td><code>dept_kpi</code></td><td>21</td><td>Department ไหน reorder สูง / ขายดี?</td><td>Category manager</td></tr>
     <tr><td><code>sku_performance</code></td><td>49,676</td><td>SKU ตัวไหน performer / dead stock?</td><td>Merchandising</td></tr>
     <tr><td><code>hourly_demand</code></td><td>3,528</td><td>Peak hour อยู่ตอนไหน × dept อะไร?</td><td>Workforce / inventory</td></tr>
-    <tr><td><code>customer_segment</code></td><td>206,209</td><td>VIP / Loyal / Regular / New แต่ละกลุ่มกี่คน?</td><td>CRM / Marketing</td></tr>
+    <tr><td><code>customer_segment</code></td><td>206,209</td><td>VIP / Loyal / Regular / New แต่ละกลุ่มกี่คน?</td><td>Old Place / Marketing</td></tr>
   </table>
 
   <h3>5.1 <code>dept_kpi</code> · 21 rows</h3>
@@ -422,7 +422,7 @@ dim_products (50K, broadcast)┘                                                
     4. <b>Check partition skew</b> — ถ้า key ตัวเดียว 80% ของ rows → salting<br>
     5. <b>Right number of partitions</b> — ขนาด ~128MB ต่อ partition<br>
     6. <b>Cache</b> ถ้าใช้ DataFrame ซ้ำ &gt; 1 ครั้ง<br>
-    <b>โยงประสบการณ์เดิม:</b> ที่ Feedback180 ผม optimize Tableau dashboard 2.5h → 30min ด้วย same principles — push aggregate ลงใน source DB (Postgres) แทนทำใน Tableau → ลด data scanned + ใช้ index. หลักการคล้ายกัน.
+    <b>โยงประสบการณ์เดิม:</b> ที่ Old Place ผม optimize Tableau dashboard 2.5h → 30min ด้วย same principles — push aggregate ลงใน source DB (Postgres) แทนทำใน Tableau → ลด data scanned + ใช้ index. หลักการคล้ายกัน.
   </div>
 </div>
 
@@ -477,7 +477,7 @@ dim_products (50K, broadcast)┘                                                
     <li>CTE = single query, in-memory, ตายเมื่อ query จบ</li>
     <li>Medallion = persistent storage, cross-query, cross-tool, มี history</li>
   </ul>
-  <p>ดังนั้น "experience SQL 5x optimization" ของคุณที่ Feedback180 = <b>foundation เดียวกันกับ Spark optimization</b> — ต่างที่ engine.</p>
+  <p>ดังนั้น "experience SQL 5x optimization" ของคุณที่ Old Place = <b>foundation เดียวกันกับ Spark optimization</b> — ต่างที่ engine.</p>
   <p class="mute">Use this when asked "How does your past experience translate to Spark?"</p>
 </div>
 

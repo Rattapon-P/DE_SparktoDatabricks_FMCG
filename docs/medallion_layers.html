@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<title>Medallion Layers — Purpose Summary (Bronze · Silver · Gold)</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  :root{
+    --bg:#0f1115; --panel:#161a22; --panel2:#1c2230; --line:#2a3142;
+    --ink:#e6edf3; --mute:#9aa4b2; --accent:#6ea8ff; --good:#5fd07a; --bad:#ff7a7a;
+    --warn:#ffd58a; --code:#0b0d12;
+    --bronze:#cd7f32; --silver:#c0c0c0; --gold:#d4af37;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans Thai",sans-serif;
+    line-height:1.6;font-size:15px}
+  .wrap{max-width:1100px;margin:0 auto;padding:32px 24px 80px}
+  h1{font-size:30px;margin:0 0 6px}
+  h2{font-size:22px;margin:36px 0 12px;border-bottom:1px solid var(--line);padding-bottom:8px}
+  h3{font-size:17px;margin:22px 0 8px;color:var(--accent)}
+  h4{font-size:14px;margin:14px 0 6px;color:var(--mute);text-transform:uppercase;letter-spacing:.5px}
+  small,.mute{color:var(--mute)}
+  code,pre{font-family:ui-monospace,Menlo,Consolas,"Cascadia Mono",monospace;font-size:13.5px}
+  code{background:var(--code);padding:1px 6px;border-radius:4px;color:#cfe5ff}
+  pre{background:var(--code);padding:14px 16px;border-radius:8px;overflow:auto;border:1px solid var(--line);
+    color:#cfe5ff;line-height:1.55}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+  .panel2{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:10px 0}
+  table{border-collapse:collapse;width:100%;margin:8px 0 10px;font-size:14px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#1a2030;color:var(--accent);font-weight:600}
+  tr:nth-child(even) td{background:#171c27}
+  .why{border-left:3px solid var(--accent);padding:8px 12px;background:#13192a;margin:10px 0;border-radius:0 6px 6px 0}
+  .why b{color:var(--accent)}
+  .err{border-left:3px solid var(--bad);padding:8px 12px;background:#1f1416;margin:10px 0;border-radius:0 6px 6px 0}
+  .ok{border-left:3px solid var(--good);padding:8px 12px;background:#13201a;margin:10px 0;border-radius:0 6px 6px 0}
+  .warn{border-left:3px solid var(--warn);padding:8px 12px;background:#221d10;margin:10px 0;border-radius:0 6px 6px 0}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;margin-right:6px}
+  .pill.tag{background:#22293a;color:var(--mute);border:1px solid var(--line)}
+  .pill.bronze{background:rgba(205,127,50,.16);color:#e6a86a;border:1px solid rgba(205,127,50,.45)}
+  .pill.silver{background:rgba(192,192,192,.14);color:#dadada;border:1px solid rgba(192,192,192,.4)}
+  .pill.gold{background:rgba(212,175,55,.16);color:#f0d36a;border:1px solid rgba(212,175,55,.5)}
+  hr{border:none;border-top:1px dashed var(--line);margin:24px 0}
+  .footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--mute);font-size:13px}
+  .ascii{background:var(--code);border:1px solid var(--line);border-radius:8px;padding:14px;
+    white-space:pre;font-size:13px;color:#cfe5ff;overflow:auto}
+  .toc{background:#141926;border:1px solid var(--line);border-radius:8px;padding:14px 18px}
+  .toc a{color:#9bc4ff;text-decoration:none}
+  .toc a:hover{text-decoration:underline}
+  .layer{border-radius:12px;padding:18px 22px;margin:18px 0;border:1px solid var(--line);background:var(--panel)}
+  .layer.bronze{border-left:6px solid var(--bronze)}
+  .layer.silver{border-left:6px solid var(--silver)}
+  .layer.gold{border-left:6px solid var(--gold)}
+  .layer h2{margin-top:0;border-bottom:none;padding-bottom:0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:780px){.grid2{grid-template-columns:1fr}}
+  .kv{display:grid;grid-template-columns:160px 1fr;gap:8px 12px;margin:10px 0;font-size:14px}
+  .kv .k{color:var(--mute);text-transform:uppercase;letter-spacing:.5px;font-size:12px}
+  .check{color:var(--good);font-weight:700}
+  .cross{color:var(--bad);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Medallion Layers · Purpose Summary</h1>
+  <p class="mute">Project DE_SparktoDatabrick_FMCG · Bronze → Silver → Gold คืออะไร และทำไมต้องแยก 3 ชั้น</p>
+  <span class="pill bronze">Bronze · Raw Fidelity</span>
+  <span class="pill silver">Silver · Cleaned + Conformed</span>
+  <span class="pill gold">Gold · Business Marts</span>
+</header>
+
+<div class="toc panel">
+  <b>Contents</b>
+  <ol>
+    <li><a href="#tldr">TL;DR — หนึ่งบรรทัดต่อชั้น</a></li>
+    <li><a href="#why">ทำไมต้องแบ่ง 3 ชั้น (ไม่ทำชั้นเดียวเลย)</a></li>
+    <li><a href="#bronze">Bronze Layer</a></li>
+    <li><a href="#silver">Silver Layer</a></li>
+    <li><a href="#gold">Gold Layer</a></li>
+    <li><a href="#compare">เปรียบเทียบรายชั้นแบบตาราง</a></li>
+    <li><a href="#flow">Data flow ในโปรเจกต์นี้</a></li>
+    <li><a href="#interview">Interview takeaway</a></li>
+  </ol>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="tldr">1. TL;DR — หนึ่งบรรทัดต่อชั้น</h2>
+
+<div class="panel">
+  <ul>
+    <li><b style="color:var(--bronze)">Bronze</b> = "เก็บไว้แบบเดิมที่สุด" — raw landing zone ที่ replay ได้</li>
+    <li><b style="color:var(--silver)">Silver</b> = "ทำให้ถูกต้องและเชื่อมกันได้" — clean, dedupe, join, enforce schema</li>
+    <li><b style="color:var(--gold)">Gold</b> = "พร้อมใช้ตอบคำถามธุรกิจ" — aggregated marts, 1 mart = 1 stakeholder need</li>
+  </ul>
+
+  <div class="why"><b>Mental model:</b> Bronze เก็บ "ความจริง" (truth), Silver สร้าง "ความเข้าใจ" (model), Gold ตอบ "คำถาม" (decision)</div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="why">2. ทำไมต้องแบ่ง 3 ชั้น (ไม่ทำ ETL ชั้นเดียวเลย)</h2>
+
+<div class="panel">
+  <p>คำถามที่ดีที่ interviewer ชอบถาม. ถ้าเขียน CSV → final dashboard ตรงๆ มันก็ work — แต่จะเจอปัญหา 4 อย่างนี้:</p>
+
+  <div class="grid2">
+    <div class="panel2">
+      <h4>1. Reprocessing</h4>
+      <p>ถ้า business rule ใน Silver เปลี่ยน (เช่น นิยาม "active customer") เราต้องไปดึง raw มาใหม่จากระบบต้นทาง? <b class="cross">ไม่ทัน</b>. มี Bronze เก็บ raw immutable ไว้ก่อน → reprocess ได้ทันที</p>
+    </div>
+    <div class="panel2">
+      <h4>2. Different SLAs</h4>
+      <p>Raw landing โดน upstream ใส่ทุก 5 นาที, dimensions อัปเดตวันละครั้ง, KPI dashboard ใช้สดทุก 15 นาที — แต่ละชั้นมีความถี่/ขนาด/format ที่เหมาะคนละแบบ</p>
+    </div>
+    <div class="panel2">
+      <h4>3. Quality contracts</h4>
+      <p>Bronze รับทุกอย่าง (รวม dirty rows) — Silver บังคับ schema + dedupe + drop NULL keys — Gold ตรวจ business KPI. แยกชั้น = แยกความรับผิดชอบของ data quality</p>
+    </div>
+    <div class="panel2">
+      <h4>4. Cost &amp; performance</h4>
+      <p>Gold เป็น aggregated เล็กมาก → query ถูก. ถ้าไม่มี Gold คน analyst จะวิ่ง <code>GROUP BY</code> 32M rows ทุกครั้ง = เปลือง compute</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="bronze">3. Bronze Layer — Raw Fidelity</h2>
+
+<div class="layer bronze">
+  <h2>🟫 Bronze · "เก็บความจริงไว้ก่อน"</h2>
+
+  <div class="kv">
+    <div class="k">Purpose</div><div>Landing zone ที่ <b>เก็บข้อมูลดิบจากต้นทางตามจริง</b> — minimal transformation, preserve forensic lineage</div>
+    <div class="k">Inputs</div><div>CSV / JSON / API / CDC stream จาก source system</div>
+    <div class="k">Outputs (this project)</div><div>Parquet (local) / Delta (Databricks) — <code>bronze_orders</code>, <code>bronze_products</code>, <code>bronze_aisles</code>, <code>bronze_departments</code>, <code>bronze_order_products_prior</code>, <code>bronze_order_products_train</code></div>
+    <div class="k">Transforms allowed</div><div>เปลี่ยน format อย่างเดียว (CSV → Parquet/Delta), แปะ <code>ingested_at</code> ได้, <b>ห้าม</b> filter rows / change types / join</div>
+    <div class="k">Schema policy</div><div>schema-on-read OK — ใส่ทุก column ตาม source แม้แต่ที่ไม่ใช้</div>
+    <div class="k">Idempotent?</div><div>Yes — rerun ได้โดยไม่กลัว double-count (overwrite by partition / merge by source key)</div>
+  </div>
+
+  <h3>Why Bronze ≠ ก็คือ raw CSV ตรงๆ?</h3>
+  <ul>
+    <li><b>Format upgrade</b> — Parquet/Delta อ่านเร็วกว่า CSV เป็น 10×, push down predicate ได้, schema strict</li>
+    <li><b>Single source of truth</b> — analytic layer ห้ามไปแตะ raw CSV ที่ shared drive โดยตรง (เปลี่ยน folder ที, pipeline พังทั้งบ้าน)</li>
+    <li><b>Replay safety</b> — ถ้า Silver มี bug, แก้แล้วรัน <code>02_silver.py</code> ใหม่ได้จาก Bronze ทันที โดยไม่ต้องไปขอ data จาก source อีก</li>
+  </ul>
+
+  <div class="ok"><b>This project:</b> <code>pipelines/01_bronze.py</code> อ่าน CSV จาก <code>data/raw/</code> เขียนเป็น Parquet ลง <code>data/bronze/</code> โดย <b>ไม่ filter, ไม่ join, ไม่แปลง type</b></div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="silver">4. Silver Layer — Cleaned + Conformed</h2>
+
+<div class="layer silver">
+  <h2>⬜ Silver · "ทำให้ถูกต้องและเชื่อมกันได้"</h2>
+
+  <div class="kv">
+    <div class="k">Purpose</div><div><b>Business entities ที่สะอาด, deduped, joined, มี contract</b> — เป็น input ที่ทุก downstream ใช้ร่วมกัน</div>
+    <div class="k">Inputs</div><div>Bronze tables ทั้งหมด</div>
+    <div class="k">Outputs (this project)</div><div>Delta — <code>silver_dim_products</code>, <code>silver_dim_users</code>, <code>silver_fact_order_items</code></div>
+    <div class="k">Transforms</div><div>type cast, trim, dedupe, drop NULL keys, join lookup tables, conform column names, partitioning</div>
+    <div class="k">Schema policy</div><div>schema-on-write strict — Silver บังคับ contract, ถ้า Bronze มี column ใหม่ ต้องตัดสินใจก่อน promote</div>
+    <div class="k">Partitioning (this project)</div><div><code>fact_order_items</code> partition by <code>department</code> (21 ค่า, cardinality พอเหมาะ, predicate pushdown ลด scan ~95%)</div>
+  </div>
+
+  <h3>สิ่งที่ Silver ต้องทำในโปรเจกต์นี้</h3>
+  <ul>
+    <li><b>Conform</b> — รวม <code>order_products__prior</code> + <code>order_products__train</code> ผ่าน <code>UNION ALL</code> (ไม่ใช่ <code>UNION</code> เพราะ Kaggle split การันตีไม่มีซ้ำ → skip dedup sort = เร็วกว่า ~2×)</li>
+    <li><b>Enrich</b> — join <code>products</code> ↔ <code>aisles</code> ↔ <code>departments</code> เป็น <code>dim_products</code> ที่มีทุก context</li>
+    <li><b>Aggregate to user grain</b> — <code>dim_users</code> = 1 row ต่อ user พร้อม <code>total_orders</code>, <code>avg_days_between_orders</code></li>
+    <li><b>Quality gate</b> — <code>filter(order_id IS NOT NULL AND product_id IS NOT NULL)</code> + <code>dropDuplicates(order_id, product_id)</code> ก่อน promote</li>
+  </ul>
+
+  <div class="why"><b>Why Delta (not Parquet) ที่ชั้นนี้:</b><br>
+  • ACID transactions — multiple jobs เขียนพร้อมกันไม่พัง<br>
+  • Time travel — query <code>VERSION AS OF n</code> ย้อนกลับได้<br>
+  • Schema evolution — เพิ่ม column โดยไม่ rewrite ทั้ง table<br>
+  • Z-Order / OPTIMIZE — compact small files หลังหลายๆ rerun</div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="gold">5. Gold Layer — Business Marts</h2>
+
+<div class="layer gold">
+  <h2>🟨 Gold · "พร้อมใช้ตอบคำถามธุรกิจ"</h2>
+
+  <div class="kv">
+    <div class="k">Purpose</div><div><b>Aggregated marts</b> ที่ตอบคำถาม stakeholder เฉพาะกลุ่ม — 1 mart = 1 ผู้ใช้ / 1 use case</div>
+    <div class="k">Inputs</div><div>Silver dims + facts</div>
+    <div class="k">Outputs (this project)</div><div>4 Delta marts:
+      <ul>
+        <li><code>gold_dept_kpi</code> — สำหรับ Category Manager (รายแผนก)</li>
+        <li><code>gold_sku_performance</code> — สำหรับ Merchandising (รายสินค้า)</li>
+        <li><code>gold_hourly_demand</code> — สำหรับ Operations / workforce planning (DOW × hour)</li>
+        <li><code>gold_customer_segment</code> — สำหรับ CRM / Marketing (VIP / Loyal / Regular / New)</li>
+      </ul>
+    </div>
+    <div class="k">Transforms</div><div><code>GROUP BY</code>, window functions, business rules (เช่น <code>total_orders ≥ 50 → "VIP"</code>)</div>
+    <div class="k">Grain</div><div>หยาบกว่า Silver มาก — Gold มักลดจาก 32M rows เหลือ 21–50K rows → query ใต้วินาที</div>
+  </div>
+
+  <h3>หลัก "1 mart = 1 stakeholder need"</h3>
+  <p>อย่าทำ Gold table เดียวที่ใหญ่และตอบทุกคำถาม. แยกให้ <b>แต่ละ mart มีผู้ใช้ที่ชัด, มี KPI ที่ชัด, มี SLA ที่ชัด</b>:</p>
+
+  <table>
+    <thead><tr><th>Mart</th><th>ใครใช้</th><th>คำถามที่ตอบ</th><th>Grain</th></tr></thead>
+    <tbody>
+      <tr><td><code>gold_dept_kpi</code></td><td>Category Manager</td><td>"แผนกไหน reorder rate สูงสุด?"</td><td>1 row / department</td></tr>
+      <tr><td><code>gold_sku_performance</code></td><td>Merchandising</td><td>"SKU ไหนขายดี + ลูกค้าซื้อซ้ำเยอะ?"</td><td>1 row / product</td></tr>
+      <tr><td><code>gold_hourly_demand</code></td><td>Operations</td><td>"peak hour อยู่ตอนไหน วางคนยังไง?"</td><td>DOW × hour × dept</td></tr>
+      <tr><td><code>gold_customer_segment</code></td><td>CRM / Marketing</td><td>"VIP มีกี่คน, ส่ง campaign ไหนกับใคร?"</td><td>1 row / user</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ok"><b>This project:</b> <code>pipelines/03_gold.py</code> + <code>pipelines/04_serve.py</code> สร้าง 4 marts แล้ว push ลง PostgreSQL ในตาราง <code>kpi_*</code> เพื่อให้ BI / dashboard ดึงต่อได้โดยไม่ต้องแตะ Spark</div>
+</div>
+
+<!-- ===================================================== -->
+<h2 id="compare">6. เปรียบเทียบรายชั้นแบบตาราง</h2>
+
+<table>
+  <thead>
+    <tr><th>มิติ</th><th>🟫 Bronze</th><th>⬜ Silver</th><th>🟨 Gold</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><b>Purpose</b></td><td>Raw landing</td><td>Cleaned, conformed entities</td><td>Aggregated business marts</td></tr>
+    <tr><td><b>Format</b></td><td>Parquet / Delta</td><td>Delta</td><td>Delta</td></tr>
+    <tr><td><b>Schema</b></td><td>schema-on-read (loose)</td><td>schema-on-write (strict contract)</td><td>strict + business semantics</td></tr>
+    <tr><td><b>Dedup / NULL filter</b></td><td><span class="cross">No</span></td><td><span class="check">Yes</span></td><td><span class="check">Already done upstream</span></td></tr>
+    <tr><td><b>Joins</b></td><td><span class="cross">No</span></td><td>dim ↔ fact joins</td><td>Mart-level only</td></tr>
+    <tr><td><b>Grain</b></td><td>เท่ากับ source</td><td>business entity (user, order item)</td><td>aggregated (department, segment, hour)</td></tr>
+    <tr><td><b>Row count (project)</b></td><td>~37M (รวมทุก table)</td><td>fact ~33M, dims 250K</td><td>dept 21, sku 49K, hourly 3.5K, segment 11</td></tr>
+    <tr><td><b>Partitioning</b></td><td>ตาม source / none</td><td><code>department</code></td><td><code>order_dow</code>, <code>segment</code></td></tr>
+    <tr><td><b>Who reads it</b></td><td>Data Engineer (reprocess)</td><td>Analyst, DS, downstream pipeline</td><td>Business user, BI, exec dashboard</td></tr>
+    <tr><td><b>Reprocess cost</b></td><td>Re-ingest (แพง)</td><td>Rerun job (กลาง)</td><td>Rerun aggregate (ถูก)</td></tr>
+  </tbody>
+</table>
+
+<!-- ===================================================== -->
+<h2 id="flow">7. Data flow ในโปรเจกต์นี้</h2>
+
+<div class="ascii">
+RAW (Kaggle CSV)
+    │   data/raw/*.csv  (gitignored, 577 MB+)
+    ▼
+┌─ BRONZE ──────────────────────────────────────────┐
+│  pipelines/01_bronze.py                           │
+│  CSV → Parquet  (preserve everything)             │
+│  bronze_orders, bronze_products, bronze_aisles,   │
+│  bronze_departments, bronze_order_products_prior, │
+│  bronze_order_products_train                      │
+└──────────────────────┬────────────────────────────┘
+                       ▼
+┌─ SILVER ──────────────────────────────────────────┐
+│  pipelines/02_silver.py                           │
+│  • UNION ALL prior + train (no overlap by design) │
+│  • dedupe (order_id, product_id)                  │
+│  • drop NULL keys                                 │
+│  • join product ↔ aisle ↔ department              │
+│  • partition fact by department                   │
+│  → silver_dim_products  (49K)                     │
+│  → silver_dim_users     (206K)                    │
+│  → silver_fact_order_items (~33M, partitioned)    │
+└──────────────────────┬────────────────────────────┘
+                       ▼
+┌─ GOLD ────────────────────────────────────────────┐
+│  pipelines/03_gold.py                             │
+│  4 marts, 1 mart = 1 stakeholder need             │
+│  → gold_dept_kpi          (Category Manager)      │
+│  → gold_sku_performance   (Merchandising)         │
+│  → gold_hourly_demand     (Operations)            │
+│  → gold_customer_segment  (CRM / Marketing)       │
+└──────────────────────┬────────────────────────────┘
+                       ▼
+┌─ SERVING ─────────────────────────────────────────┐
+│  pipelines/04_serve.py                            │
+│  Push Gold → PostgreSQL (kpi_* tables)            │
+│  → consumed by BI tools / Tableau / FastAPI       │
+└───────────────────────────────────────────────────┘
+</div>
+
+<!-- ===================================================== -->
+<h2 id="interview">8. Interview takeaway</h2>
+
+<div class="panel">
+  <p><b>คำถามที่จะโดน:</b> "ทำไมต้อง 3 ชั้น ไม่ทำ raw → dashboard ตรงๆ?"</p>
+
+  <div class="why"><b>คำตอบ 30 วินาที:</b><br>
+  Medallion แยกความรับผิดชอบของ <b>data quality</b> และ <b>cost</b>. Bronze เก็บ raw ให้ replay ได้ — Silver บังคับ contract และ dedupe ให้ทุก downstream ใช้ตรงกัน — Gold pre-aggregate ให้ analyst ไม่ต้อง scan 32M rows ทุก query. ถ้า business rule เปลี่ยน, แก้ที่ Silver / Gold รัน rerun ได้ทันที โดยไม่ต้องไปขอ raw จาก source ใหม่.</div>
+
+  <h3>คำถามต่อยอด</h3>
+  <ul>
+    <li><b>"Bronze ใช้ Parquet หรือ Delta?"</b> → ขึ้นอยู่กับ writer pattern. ถ้า append-only ครั้งเดียวจบ → Parquet ก็พอ. ถ้ามี <code>MERGE</code> / late-arriving / multiple writers → Delta จะปลอดภัยกว่าเพราะมี ACID</li>
+    <li><b>"Silver ทำไมต้อง dedupe?"</b> → เพราะ source อาจส่งซ้ำ (retry, replay, dual-writer). ถ้า Gold ใช้ Silver โดย assume unique แล้วซ้ำ → KPI ผิดเงียบๆ</li>
+    <li><b>"Gold ควรมีกี่ marts?"</b> → ตามจำนวน stakeholder use case ที่มี ownership ชัด. mart ที่ไม่มีคนใช้คือ technical debt — ลบทิ้ง</li>
+    <li><b>"ถ้าวันหนึ่ง Bronze schema เปลี่ยน?"</b> → Silver job ควร fail loud (schema enforcement), ไม่ใช่ silent-drop column. แก้ที่ Silver, rerun, Gold downstream ได้ค่าใหม่</li>
+  </ul>
+</div>
+
+<div class="footer">
+  Project: DE_SparktoDatabrick_FMCG · Author: Rattapon Pheanwicha · See <code>README.md</code>, <code>pipelines/</code>, <code>databricks_sql/</code>
+</div>
+
+</div>
+</body>
+</html>

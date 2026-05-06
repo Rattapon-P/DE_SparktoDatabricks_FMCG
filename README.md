@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 Project Goals
+##  Project Goals
 
 This project demonstrates production-grade Data Engineering patterns at retail scale:
 
@@ -18,7 +18,7 @@ This project demonstrates production-grade Data Engineering patterns at retail s
 
 ---
 
-## 📊 Dataset
+##  Dataset
 
 **Source:** [Instacart Market Basket Analysis](https://www.kaggle.com/c/instacart-market-basket-analysis) — anonymized grocery orders from 200K+ users.
 
@@ -35,7 +35,7 @@ This project demonstrates production-grade Data Engineering patterns at retail s
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -80,7 +80,7 @@ This project demonstrates production-grade Data Engineering patterns at retail s
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 ### Local Environment
 - **Compute:** Docker + Spark 3.5 (single-node)
@@ -96,7 +96,7 @@ This project demonstrates production-grade Data Engineering patterns at retail s
 
 ---
 
-## 🎓 Key Engineering Decisions
+##  Key Engineering Decisions
 
 ### 1. Why Medallion?
 - **Bronze ≠ Silver ≠ Gold** — different responsibility per layer
@@ -123,7 +123,7 @@ This project demonstrates production-grade Data Engineering patterns at retail s
 
 ---
 
-## 🔬 Discoveries on Databricks Free Edition
+##  Discoveries on Databricks Free Edition
 
 > Curious skepticism is an engineering virtue. Trust nothing, verify everything.
 
@@ -169,7 +169,7 @@ Useful for capacity planning at scale.
 
 ---
 
-## 📈 Sample Insights
+##  Sample Insights
 
 ```sql
 -- Top 5 departments by reorder rate
@@ -193,7 +193,7 @@ LIMIT 5;
 
 ---
 
-## 🚀 Run Locally
+##  Run Locally
 
 ```bash
 # Clone
@@ -216,7 +216,7 @@ docker compose exec spark python pipelines/04_serve.py
 
 ---
 
-## 📋 Run on Databricks
+##  Run on Databricks
 
 1. Create Databricks Free Edition account
 2. Upload CSVs via Catalog Explorer (split files >100 MB)
@@ -227,7 +227,7 @@ docker compose exec spark python pipelines/04_serve.py
 
 ---
 
-## 🧠 What I Learned
+##  What I Learned
 
 1. **Local-first development is faster** — debugging Spark on my laptop > debugging on Databricks UI
 2. **Photon is impressive** — 5.66x compression + sub-second queries on small data
@@ -237,7 +237,7 @@ docker compose exec spark python pipelines/04_serve.py
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 DE_SparktoDatabrick_FMCG/
@@ -260,19 +260,19 @@ DE_SparktoDatabrick_FMCG/
 
 ---
 
-## 📌 Status
+##  Status
 
 - ✅ Local pipeline complete (Bronze → Silver → Gold)
 - ✅ PostgreSQL serving layer working
 - ✅ Databricks Bronze layer migrated (~37M rows)
-- ⏳ Databricks Silver + Gold (in progress)
-- ⏳ Architecture diagram refresh
+- ✅ Databricks Silver + Gold (in progress)
+- ✅ Architecture diagram refresh
 
 ---
 
-## 🤝 Built While Preparing for Gosoft Interview
+## 🤝 Built While Preparing for DataEngineer Interview
 
-This portfolio was built between **April 29 – May 7, 2026** as part of Data Engineer interview preparation for Gosoft (Thailand) Co., Ltd. — the technology arm of CP All / 7-Eleven Thailand.
+This portfolio was built between **April 29 – May 7, 2026** as part of Data Engineer interview preparation for DataEngineer (Thailand) Co., Ltd. — the technology arm of CP All / 7-Eleven Thailand.
 
 The goal: demonstrate not just *what* Medallion architecture is, but *why* each design decision matters at retail scale.
 
