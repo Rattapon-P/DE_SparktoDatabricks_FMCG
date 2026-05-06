@@ -15,7 +15,7 @@ After downloading, unzip all six CSVs directly into this folder so the layout ma
 
 ## Why this dataset
 
-The Data Engineer role this project targets is at Gosoft (CP All / 7-Eleven group). Instacart is the closest large public dataset to retail / FMCG transactions: real product hierarchy (department → aisle → product), real basket structure, and real reorder behaviour — the same shape as a convenience-store POS feed.
+The Data Engineer role this project targets is at DataEngineer (CP All / 7-Eleven group). Instacart is the closest large public dataset to retail / FMCG transactions: real product hierarchy (department → aisle → product), real basket structure, and real reorder behaviour — the same shape as a convenience-store POS feed.
 
 ## Files
 
@@ -69,23 +69,23 @@ The Data Engineer role this project targets is at Gosoft (CP All / 7-Eleven grou
 | `add_to_cart_order` | int | 1-indexed position in basket |
 | `reordered` | int | 1 if the user has bought this product before, else 0 |
 
-## Splitting the large file for Databricks
+## Splitting large files for Databricks
 
-`order_products__prior.csv` is 577 MB — too large for Databricks Community Edition. Use [`split_prior.py`](split_prior.py) to reduce it before uploading:
+The Databricks UI uploader has a **100 MB per-file limit**, but `order_products__prior.csv` is 577 MB. Use [`split_prior.py`](split_prior.py) to chunk any CSV into N equal parts (header preserved in each part) before uploading. Databricks then auto-merges parts with matching schemas into a single Delta table — no manual `UNION ALL` needed at the SQL layer.
 
 ```bash
-# Keep 30% of rows → order_products__prior_30pct.csv (~173 MB)
+# Default: split order_products__prior.csv into 10 parts (~58 MB each)
 python data/raw/split_prior.py
 
-# Keep a custom percentage, e.g. 50%
-python data/raw/split_prior.py --pct 50
+# Custom part count, e.g. 7 parts (~83 MB each)
+python data/raw/split_prior.py --parts 7
 
-# Split into two equal halves → _1.csv / _2.csv (~289 MB each)
-python data/raw/split_prior.py --split
-
-# Split into two files, 40% each
-python data/raw/split_prior.py --split --pct 40
+# Split a different file
+python data/raw/split_prior.py --file orders.csv --parts 3
+python data/raw/split_prior.py --file order_products__train.csv --parts 2
 ```
+
+Output files are written next to the source as `<stem>_part1.csv`, `<stem>_part2.csv`, …
 
 ## Sample data
 

@@ -2,7 +2,7 @@
 <html lang="th">
 <head>
 <meta charset="utf-8">
-<title>Pipeline Insight Summary — Instacart × Gosoft DE Prep</title>
+<title>Pipeline Insight Summary — Instacart × DataEngineer DE Prep</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
   :root{
@@ -99,8 +99,8 @@
     <li><b>Volume:</b> 6 CSV files · ~720 MB total · largest = <code>order_products__prior.csv</code> (577 MB · 32M rows)</li>
   </ul>
 
-  <h4>Why this dataset for a Gosoft (CP All / 7-Eleven) interview</h4>
-  <p>Gosoft เป็นบริษัท IT ในเครือ CP All ที่ทำ data ให้ retail / FMCG (7-Eleven). Instacart คือ public dataset ที่<b>ใกล้ที่สุด</b>กับ POS feed ของร้านสะดวกซื้อ:</p>
+  <h4>Why this dataset for a DataEngineer (CP All / 7-Eleven) interview</h4>
+  <p>DataEngineer เป็นบริษัท IT ในเครือ CP All ที่ทำ data ให้ retail / FMCG (7-Eleven). Instacart คือ public dataset ที่<b>ใกล้ที่สุด</b>กับ POS feed ของร้านสะดวกซื้อ:</p>
   <ul>
     <li>มี <b>product hierarchy จริง</b>: department (21) → aisle (134) → product (~50K SKU) — เหมือนโครงสินค้าใน 7-11</li>
     <li>มี <b>basket structure</b>: 1 order ประกอบด้วยหลายสินค้า + ลำดับหยิบใส่ตะกร้า — ใช้ทำ market basket / cross-sell</li>
@@ -372,7 +372,7 @@ dim_products (50K, broadcast)┘                                                
 <h3>About data understanding (DE ที่เข้าใจข้อมูล)</h3>
 <div class="qa">
   <div class="q">Q: Dataset ที่ใช้คืออะไร ทำไมเลือกอันนี้?</div>
-  <div class="a">Instacart Market Basket จาก Kaggle 2017. เลือกเพราะ schema กับ business question ใกล้ retail/FMCG ที่สุด — มี product hierarchy 3 ชั้น, basket data, reorder signal, temporal pattern. ตรงกับ POS feed ของ 7-Eleven ที่ Gosoft ดูแล.</div>
+  <div class="a">Instacart Market Basket จาก Kaggle 2017. เลือกเพราะ schema กับ business question ใกล้ retail/FMCG ที่สุด — มี product hierarchy 3 ชั้น, basket data, reorder signal, temporal pattern. ตรงกับ POS feed ของ 7-Eleven ที่ DataEngineer ดูแล.</div>
 </div>
 <div class="qa">
   <div class="q">Q: <code>order_products__prior</code> กับ <code>order_products__train</code> ต่างกันยังไง?</div>
@@ -505,7 +505,7 @@ dim_products (50K, broadcast)┘                                                
 </div>
 
 <div class="footer">
-  Project: <code>DE_SparktoDatabrick_FMCG</code> · Author: Rattapon · Built for Gosoft Data Engineer interview prep · Date: 2026-05-03
+  Project: <code>DE_SparktoDatabrick_FMCG</code> · Author: Rattapon · Built for DataEngineer Data Engineer interview prep · Date: 2026-05-03
 </div>
 
 </div>
