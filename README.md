@@ -20,7 +20,7 @@ This project demonstrates production-grade Data Engineering patterns at retail s
 
 ##  Dataset
 
-**Source:** [Instacart Market Basket Analysis]([https://www.kaggle.com/c/instacart-market-basket-analysis](https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis)) — anonymized grocery orders from 200K+ users.
+**Source:** [Instacart Market Basket Analysis]([https://www.kaggle.com/datasets/psparks/instacart-market-basket-analysis]) — anonymized grocery orders from 200K+ users.
 
 | Table | Rows | Description |
 |---|---|---|
