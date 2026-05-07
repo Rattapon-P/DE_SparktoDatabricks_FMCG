@@ -272,7 +272,7 @@ DE_SparktoDatabrick_FMCG/
 
 ## 🤝 Built While Preparing for DataEngineer Interview
 
-This portfolio was built between **April 29 – May 7, 2026** as part of Data Engineer interview preparation for DataEngineer (Thailand) Co., Ltd. — the technology arm of CP All / 7-Eleven Thailand.
+This portfolio was built between **April 29 – May 7, 2026** as part of Data Engineer interview preparation.
 
 The goal: demonstrate not just *what* Medallion architecture is, but *why* each design decision matters at retail scale.
 
